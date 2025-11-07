@@ -20,7 +20,7 @@ M.ui = {
         enabledlazyload = false
     },
    statusline = {
-     theme = "default",
+     theme = "minimal",
      separator_style = "round",
      order =  { "mode", "file", "git", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "cursor" },
    },

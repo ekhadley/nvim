@@ -4,11 +4,9 @@ vim.g.mapleader = " "
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
-
 vim.filetype.add({
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
-
 
 if not vim.uv.fs_stat(lazypath) then
   local repo = "https://github.com/folke/lazy.nvim.git"
@@ -20,40 +18,40 @@ vim.opt.rtp:prepend(lazypath)
 local lazy_config = require "configs.lazy"
 -- load plugins
 require("lazy").setup({
-    {
-        "NvChad/NvChad",
-        lazy = false,
-        branch = "v2.5",
-        import = "nvchad.plugins",
+        {
+            "NvChad/NvChad",
+            lazy = false,
+            branch = "v2.5",
+            import = "nvchad.plugins",
+        },
+        {
+            "nvim-treesitter",
+            lazy = false,
+            config = function()
+                require("configs.treesitter")
+            end,
+        },
+        {
+            "HiPhish/rainbow-delimiters.nvim",
+            lazy = false,
+            config = function()
+                require("configs.rainbows")
+            end,
+        },
+        {
+            "j-hui/fidget.nvim",
+            event = "BufRead",
+            lazy = false,
+            config = function()
+                require("configs.fidget")
+            end,
+        },
+        {
+            import = "plugins"
+        },
     },
-    {
-        "nvim-treesitter",
-        lazy = false,
-        config = function()
-            require("configs.treesitter")
-        end,
-    },
-    {
-        "HiPhish/rainbow-delimiters.nvim",
-        lazy = false,
-        config = function()
-            require("configs.rainbows")
-        end,
-    },
-    {
-        "github/copilot.vim",
-        lazy = false,
-        config = function()
-            vim.g.copilot_filetypes = {
-                markdown = false,
-                md = false,
-            }
-        end,
-    },
-    {
-        import = "plugins"
-    },
-}, lazy_config)
+    lazy_config
+)
 
 
 -- load theme

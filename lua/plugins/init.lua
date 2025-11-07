@@ -22,9 +22,6 @@ return {
   	"HiPhish/rainbow-delimiters.nvim",
   },
   {
-  	"github/copilot.vim",
+  	"j-hui/fidget.nvim",
   },
-  -- {
-  -- 	"justinmk/vim-sneak",
-  -- },
 }

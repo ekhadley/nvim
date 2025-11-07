@@ -30,7 +30,6 @@ Core plugins loaded in `init.lua`:
 - NvChad (base framework)
 - nvim-treesitter (syntax highlighting)
 - rainbow-delimiters (bracket pair colorization)
-- github/copilot.vim (disabled for markdown files)
 
 Additional plugins listed in `lua/plugins/init.lua`:
 - nvim-lspconfig (LSP integration)
@@ -54,4 +53,3 @@ nvim --headless -c "luafile init.lua" -c "quit"
 - The base46 theme cache is stored in Neovim's data directory
 - LSP servers are enabled using the newer `vim.lsp.config()` and `vim.lsp.enable()` API (not `lspconfig.setup()`)
 - Many default Neovim plugins are disabled in `lua/configs/lazy.lua` for performance
-- Copilot is explicitly disabled for markdown/md files
