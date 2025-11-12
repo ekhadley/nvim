@@ -1,7 +1,7 @@
 -- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "superhtml", "cssls", "clangd", "zls", "hyprls", "biome", "rust-analyzer" }
+local servers = { "superhtml", "cssls", "clangd", "zls", "hyprls", "biome", "rust-analyzer", "hyprls" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config

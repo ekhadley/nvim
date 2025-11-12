@@ -20,3 +20,6 @@ map({ "n", "t" }, "<A-h>", "<nop>", { desc = "disabled default terminal toggle" 
 -- Swap jump list navigation (ctrl-i backward, ctrl-o forward)
 map("n", "<C-i>", "<C-o>", { desc = "jump to older position (backward)" })
 map("n", "<C-o>", "<C-i>", { desc = "jump to newer position (forward)" })
+
+-- Telescope resume last search
+map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "telescope resume last search" })
