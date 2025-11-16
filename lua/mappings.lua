@@ -23,3 +23,6 @@ map("n", "<C-o>", "<C-i>", { desc = "jump to newer position (forward)" })
 
 -- Telescope resume last search
 map("n", "<leader>fr", "<cmd>Telescope resume<cr>", { desc = "telescope resume last search" })
+
+-- Telescope find files with Ctrl+e
+map("n", "<C-e>", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })

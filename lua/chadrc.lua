@@ -7,7 +7,7 @@ local M = {}
 
 M.base46 = {
 	theme = "gruvbox",
-    transparency = true,
+    transparency = false,
 	-- hl_override = {
 	-- 	Comment = { italic = true },
 	-- 	["@comment"] = { italic = true },
@@ -20,7 +20,7 @@ M.ui = {
         enabledlazyload = false
     },
    statusline = {
-     theme = "minimal",
+     theme = "default",
      separator_style = "round",
      order =  { "mode", "file", "git", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "cursor" },
    },
