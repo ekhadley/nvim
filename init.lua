@@ -1,58 +1,34 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
--- bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-
+-- Custom filetype detection for HyprLand
 vim.filetype.add({
-    pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
 
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+
 if not vim.uv.fs_stat(lazypath) then
-    local repo = "https://github.com/folke/lazy.nvim.git"
-    vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+	local repo = "https://github.com/folke/lazy.nvim.git"
+	vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- Load plugins
 local lazy_config = require "configs.lazy"
--- load plugins
 require("lazy").setup({
-    {
-        "NvChad/NvChad",
-        lazy = false,
-        branch = "v2.5",
-        import = "nvchad.plugins",
-    },
-    {
-        "nvim-treesitter",
-        lazy = false,
-        config = function()
-            require("configs.treesitter")
-        end,
-    },
-    {
-        "HiPhish/rainbow-delimiters.nvim",
-        lazy = false,
-        config = function()
-            require("configs.rainbows")
-        end,
-    },
-    {
-        "j-hui/fidget.nvim",
-        event = "BufRead",
-        lazy = false,
-        config = function()
-            require("configs.fidget")
-        end,
-    },
-    {
-        import = "plugins"
-    },
+	{
+		"NvChad/NvChad",
+		lazy = false,
+		branch = "v2.5",
+		import = "nvchad.plugins",
+	},
+	{ import = "plugins" },
 }, lazy_config)
 
-
--- load theme
+-- Load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
@@ -60,5 +36,5 @@ require "options"
 require "nvchad.autocmds"
 
 vim.schedule(function()
-    require "mappings"
+	require "mappings"
 end)
