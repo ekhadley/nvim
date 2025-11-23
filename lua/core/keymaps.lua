@@ -3,30 +3,26 @@ local map = vim.keymap.set
 
 -- General
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>", { desc = "Exit insert mode" })
-map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear search highlights" })
 
 -- Window navigation
-map("n", "<C-h>", "<C-w>h", { desc = "Window left" })
-map("n", "<C-j>", "<C-w>j", { desc = "Window down" })
-map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
-map("n", "<C-l>", "<C-w>l", { desc = "Window right" })
-
--- Window resize
-map("n", "<C-Up>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
-map("n", "<C-Down>", "<cmd>resize -2<CR>", { desc = "Decrease window height" })
-map("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+map("n", "<C-Left>", "<C-w>h", { desc = "Window left" })
+map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
+map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
+map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
 
 -- Buffer navigation
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
-map("n", "<leader>x", "<cmd>bdelete<CR>", { desc = "Close buffer" })
+map("n", "<leader>x", function()
+    local buf = vim.api.nvim_get_current_buf()
+    if vim.bo[buf].filetype == "NvimTree" then return end
+    vim.cmd("bprevious | bdelete " .. buf)
+end, { desc = "Close buffer" })
 map("n", "<leader>b", "<cmd>enew<CR>", { desc = "New buffer" })
 
 -- Move lines
-map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 
 -- Stay in visual mode after indenting
 map("v", "<", "<gv", { desc = "Indent left" })
@@ -45,9 +41,6 @@ map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 -- Save file
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
-
--- Copy entire file
-map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "Copy entire file" })
 
 -- Comment (using native neovim comment)
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
@@ -82,3 +75,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>q", vim.diagnostic.setloclist, opts("Diagnostic list"))
 	end,
 })
+

@@ -60,7 +60,9 @@ return {
 				capabilities = capabilities,
 				settings = {
 					basedpyright = {
-						analysis = { typeCheckingMode = "basic" },
+						analysis = {
+                            typeCheckingMode = "basic"
+                        },
 					},
 				},
 			}
@@ -92,20 +94,6 @@ return {
 					winblend = 0,
 				},
 			},
-		},
-	},
-
-	-- Function signature help
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "LspAttach",
-		opts = {
-			bind = true,
-			handler_opts = {
-				border = "rounded",
-			},
-			hint_enable = true,
-			hint_prefix = "󰏫 ",
 		},
 	},
 }

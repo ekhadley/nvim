@@ -19,7 +19,6 @@ opt.tabstop = 4
 opt.smartindent = true
 
 -- Search
-opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = true
 opt.incsearch = true
@@ -48,11 +47,6 @@ opt.fillchars = { eob = " " }
 -- Completion
 opt.completeopt = "menu,menuone,noselect"
 opt.pumheight = 10
-
--- Folding (using treesitter)
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-opt.foldenable = false
 
 -- Disable some default providers
 g.loaded_node_provider = 0

@@ -5,27 +5,6 @@ local augroup = vim.api.nvim_create_augroup
 -- General settings group
 local general = augroup("General", { clear = true })
 
--- Highlight on yank
-autocmd("TextYankPost", {
-	group = general,
-	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
-	end,
-	desc = "Highlight yanked text",
-})
-
--- Remove trailing whitespace on save
-autocmd("BufWritePre", {
-	group = general,
-	pattern = "*",
-	callback = function()
-		local cursor = vim.api.nvim_win_get_cursor(0)
-		vim.cmd([[%s/\s\+$//e]])
-		vim.api.nvim_win_set_cursor(0, cursor)
-	end,
-	desc = "Remove trailing whitespace",
-})
-
 -- Resize splits when window is resized
 autocmd("VimResized", {
 	group = general,
