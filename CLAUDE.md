@@ -8,32 +8,30 @@ This is a Neovim configuration built on top of NvChad v2.5, which is used as a p
 
 ### Core Entry Point
 
-- `init.lua` - Bootstraps lazy.nvim plugin manager, loads NvChad as a plugin, configures additional plugins, and requires core modules
+- `init.lua` - Bootstraps lazy.nvim plugin manager, loads NvChad as a plugin, and imports custom plugins
 - NvChad is loaded as a lazy.nvim plugin from the `NvChad/NvChad` repo (v2.5 branch)
 
 ### Module Structure
 
-- `lua/chadrc.lua` - NvChad configuration (theme, UI, statusline). Uses gruvbox theme with transparency enabled
+- `lua/chadrc.lua` - NvChad configuration (theme, UI, statusline). Uses gruvbox theme with transparency disabled
 - `lua/options.lua` - Extends NvChad options with custom Vim settings (scrolloff, shiftwidth, tabstop, wrap)
 - `lua/mappings.lua` - Extends NvChad mappings with custom keybindings (`;` for command mode, `jk` for ESC)
-- `lua/plugins/init.lua` - Custom plugin declarations for lazy.nvim
+- `lua/plugins/init.lua` - All custom plugin declarations for lazy.nvim
 - `lua/configs/` - Plugin-specific configuration files:
-  - `lspconfig.lua` - LSP server setup (superhtml, cssls, clangd, zls, basedpyright, hyprls, biome)
-  - `treesitter.lua` - Contains commented custom treesitter highlight colors (VSCode Monokai theme)
+  - `lspconfig.lua` - LSP server setup (superhtml, cssls, clangd, zls, basedpyright, hyprls, biome, rust_analyzer)
+  - `treesitter.lua` - Treesitter setup with language parsers
+  - `highlights.lua` - Custom Gruvbox-based syntax highlighting overrides
   - `lazy.lua` - lazy.nvim configuration with performance optimizations (many default plugins disabled)
   - `rainbows.lua` - Configuration for rainbow-delimiters plugin
-  - `conform.lua` - Formatter configuration (currently unused)
 
 ### Active Plugins
 
-Core plugins loaded in `init.lua`:
-- NvChad (base framework)
+Plugins declared in `lua/plugins/init.lua`:
+- NvChad (base framework, loaded in init.lua)
 - nvim-treesitter (syntax highlighting)
 - rainbow-delimiters (bracket pair colorization)
-
-Additional plugins listed in `lua/plugins/init.lua`:
 - nvim-lspconfig (LSP integration)
-- conform.nvim (formatter, commented out)
+- fidget.nvim (LSP progress indicator)
 
 ## Testing and Development
 

@@ -1,27 +1,34 @@
 return {
-  -- {
-  --   "stevearc/conform.nvim",
-  --   -- event = 'BufWritePre', -- uncomment for format on save
-  --   opts = require "configs.conform",
-  -- },
+	-- LSP configuration
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require "configs.lspconfig"
+		end,
+	},
 
-  -- These are some examples, uncomment them if you want to see them work!
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "configs.lspconfig"
-    end,
-  },
-  {
-  	"nvim-treesitter/nvim-treesitter",
-    highlight = {
-        enable = true,
-    }
-  },
-  {
-  	"HiPhish/rainbow-delimiters.nvim",
-  },
-  {
-  	"j-hui/fidget.nvim",
-  },
+	-- Syntax highlighting
+	{
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		config = function()
+			require "configs.treesitter"
+		end,
+	},
+
+	-- Rainbow brackets
+	{
+		"HiPhish/rainbow-delimiters.nvim",
+		lazy = false,
+		config = function()
+			require "configs.rainbows"
+		end,
+	},
+
+	-- LSP progress indicator
+	{
+		"j-hui/fidget.nvim",
+		event = "LspAttach",
+		opts = {},
+	},
 }
