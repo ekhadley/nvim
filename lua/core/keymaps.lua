@@ -53,5 +53,32 @@ map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "Copy entire file" })
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
 
--- LSP keymaps (set on LspAttach in lsp.lua)
--- These are defined in lua/plugins/lsp.lua
+-- LSP keymaps (set on LspAttach)
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local bufnr = args.buf
+		local opts = function(desc) return { buffer = bufnr, desc = desc } end
+
+		map("n", "gD", vim.lsp.buf.declaration, opts("Go to declaration"))
+		map("n", "gd", vim.lsp.buf.definition, opts("Go to definition"))
+		map("n", "K", vim.lsp.buf.hover, opts("Hover documentation"))
+		map("n", "gi", vim.lsp.buf.implementation, opts("Go to implementation"))
+		map("n", "<C-k>", vim.lsp.buf.signature_help, opts("Signature help"))
+		map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts("Add workspace folder"))
+		map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts("Remove workspace folder"))
+		map("n", "<leader>wl", function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, opts("List workspace folders"))
+		map("n", "<leader>D", vim.lsp.buf.type_definition, opts("Type definition"))
+		map("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename"))
+		map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+		map("n", "gr", vim.lsp.buf.references, opts("References"))
+		map("n", "<leader>fm", function() vim.lsp.buf.format({ async = true }) end, opts("Format"))
+
+		-- Diagnostics
+		map("n", "[d", vim.diagnostic.goto_prev, opts("Previous diagnostic"))
+		map("n", "]d", vim.diagnostic.goto_next, opts("Next diagnostic"))
+		map("n", "<leader>e", vim.diagnostic.open_float, opts("Open diagnostic float"))
+		map("n", "<leader>q", vim.diagnostic.setloclist, opts("Diagnostic list"))
+	end,
+})
