@@ -18,29 +18,30 @@ This is a vanilla Neovim configuration using lazy.nvim as the plugin manager. It
 ├── lua/
 │   ├── core/
 │   │   ├── options.lua         # vim.opt settings
-│   │   ├── keymaps.lua         # all keybindings
+│   │   ├── keymaps.lua         # all keybindings (including LSP keymaps on LspAttach)
 │   │   └── autocmds.lua        # autocommands (including HyprLand filetype detection)
 │   ├── plugins/
 │   │   ├── init.lua            # imports all plugin modules
-│   │   ├── lsp.lua             # LSP + mason config
+│   │   ├── lsp.lua             # LSP + mason config (servers, diagnostics)
 │   │   ├── cmp.lua             # completion (nvim-cmp) config
 │   │   ├── treesitter.lua      # treesitter + rainbow-delimiters config
-│   │   ├── ui.lua              # lualine, bufferline, alpha, toggleterm, which-key, indent-blankline, colorizer
-│   │   ├── editor.lua          # nvim-tree, telescope, gitsigns
+│   │   ├── ui.lua              # lualine, bufferline, toggleterm, which-key, indent-blankline, colorizer
+│   │   ├── editor.lua          # nvim-tree, telescope, gitsigns, hop
 │   │   └── themes.lua          # themery + gruvbox, tokyonight, catppuccin
-│   └── highlights.lua          # custom Gruvbox-based syntax highlighting overrides
+│   ├── highlights.lua          # custom Gruvbox-based syntax highlighting overrides
+│   └── lualine_theme.lua       # custom Gruvbox-based lualine statusline theme
 ```
 
 ### Active Plugins
 
 **Core UI:**
-- lualine.nvim (statusline)
+- lualine.nvim (statusline, uses custom theme from lualine_theme.lua)
 - bufferline.nvim (buffer tabs)
-- alpha-nvim (dashboard)
 - toggleterm.nvim (terminal)
 - which-key.nvim (keybinding hints)
 - indent-blankline.nvim (indent guides)
 - nvim-colorizer.lua (color preview)
+- nvim-web-devicons (icons)
 
 **Theming:**
 - themery.nvim (theme switcher)
@@ -52,13 +53,13 @@ This is a vanilla Neovim configuration using lazy.nvim as the plugin manager. It
 - nvim-tree.lua (file explorer)
 - telescope.nvim (fuzzy finder)
 - gitsigns.nvim (git integration)
+- hop.nvim (easy motion)
 
 **LSP & Completion:**
 - nvim-lspconfig (LSP)
 - mason.nvim + mason-lspconfig.nvim (LSP installer)
 - nvim-cmp + sources (completion)
 - LuaSnip + friendly-snippets (snippets)
-- lsp_signature.nvim (function signatures)
 - fidget.nvim (LSP progress)
 
 **Syntax:**
@@ -84,24 +85,82 @@ nvim --headless -c "luafile init.lua" -c "quit"
 
 ## Key Bindings
 
+### General
 | Action | Binding |
 |--------|---------|
 | Leader | `<Space>` |
 | Command mode | `;` |
-| Escape | `jk` |
-| File explorer | `<C-b>` |
-| Find files | `<leader>ff` or `<C-e>` |
-| Live grep | `<leader>fw` |
-| Buffers | `<leader>fb` |
-| Terminal | `<C-\`>` |
-| Theme picker | `<leader>th` |
+| Save file | `<C-s>` |
+| New buffer | `<leader>b` |
 | Next buffer | `<Tab>` |
 | Prev buffer | `<S-Tab>` |
 | Close buffer | `<leader>x` |
+| Toggle comment | `<leader>/` |
+
+### Navigation
+| Action | Binding |
+|--------|---------|
+| Hop to word | `s` |
+| Hop to char | `S` |
+| Window left/down/up/right | `<C-Arrow>` |
+| Jump backward | `<C-i>` (swapped) |
+| Jump forward | `<C-o>` (swapped) |
+| Scroll down centered | `<C-d>` |
+| Scroll up centered | `<C-u>` |
+
+### File Explorer & Search
+| Action | Binding |
+|--------|---------|
+| Toggle file explorer | `<C-b>` |
+| Find files | `<leader>ff` or `<C-e>` |
+| Live grep | `<leader>fw` |
+| Buffers | `<leader>fb` |
+| Recent files | `<leader>fo` |
+| Help tags | `<leader>fh` |
+| Resume search | `<leader>fr` |
+| Git commits | `<leader>gc` |
+| Git status | `<leader>gs` |
+
+### Terminal & UI
+| Action | Binding |
+|--------|---------|
+| Terminal | `` <C-`> `` |
+| Theme picker | `<leader>th` |
+| Which-key (buffer) | `<leader>?` |
+
+### LSP (available after LspAttach)
+| Action | Binding |
+|--------|---------|
+| Go to definition | `gd` |
+| Go to declaration | `gD` |
+| Hover docs | `K` |
+| Go to implementation | `gi` |
+| Signature help | `<C-k>` |
+| Type definition | `<leader>D` |
+| Rename | `<leader>rn` |
+| Code action | `<leader>ca` |
+| References | `gr` |
+| Format | `<leader>fm` |
+| Prev/next diagnostic | `[d` / `]d` |
+| Diagnostic float | `<leader>e` |
+
+### Gitsigns
+| Action | Binding |
+|--------|---------|
+| Next/prev hunk | `]c` / `[c` |
+| Stage hunk | `<leader>hs` |
+| Reset hunk | `<leader>hr` |
+| Stage buffer | `<leader>hS` |
+| Preview hunk | `<leader>hp` |
+| Blame line | `<leader>hb` |
+| Diff this | `<leader>hd` |
 
 ## Important Notes
 
 - Custom filetype detection for HyprLand config files is in `lua/core/autocmds.lua`
 - Custom Gruvbox syntax highlights are applied via `lua/highlights.lua` (loaded on ColorScheme event)
+- Custom lualine theme defined in `lua/lualine_theme.lua` (Gruvbox-based colors)
 - Many default Neovim plugins are disabled in `init.lua` for performance
-- LSP keymaps are set on `LspAttach` event in `lua/plugins/lsp.lua`
+- LSP keymaps are set on `LspAttach` event in `lua/core/keymaps.lua`
+- Uses nvim 0.11+ `vim.lsp.config` API for LSP server configuration
+- `<leader>e` has two mappings: NvimTreeFocus (editor.lua) and diagnostic float (keymaps.lua) - diagnostic float takes precedence in normal buffers

@@ -1,17 +1,20 @@
--- UI Plugins: lualine, bufferline, alpha, toggleterm, which-key
 return {
-	-- Statusline
+    -- Statusline
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			options = {
-				theme = "gruvbox",
+				theme = require("lualine_theme"),
 				globalstatus = true,
+                component_separators = { left = '', right = '' },
                 -- component_separators = { left = '', right = ''},
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                -- component_separators = { left = '', right = '' },
+                -- section_separators = { left = '', right = ''},
+                -- component_separators = { left = '', right = ''},
+                -- section_separators = { left = '', right = '' },
+                section_separators = { left = '', right = '' },
 			},
 			sections = {
 				lualine_a = { "mode" },
@@ -23,8 +26,8 @@ return {
             }
         },
 	},
-
-	-- Bufferline (tabs)
+    
+    -- Bufferline (tabs)
 	{
 		"akinsho/bufferline.nvim",
 		event = "VeryLazy",
@@ -35,7 +38,7 @@ return {
 				themable = true,
 				numbers = "none",
 				close_command = "bdelete! %d",
-				indicator = { style = "icon", icon = "▎" },
+				-- indicator = { style = "icon", icon = "▎" },
 				buffer_close_icon = "󰅖",
 				modified_icon = "●",
 				close_icon = "",
@@ -56,56 +59,15 @@ return {
 					},
 				},
 				show_buffer_icons = true,
-				show_buffer_close_icons = true,
+				-- show_buffer_close_icons = false,
 				show_close_icon = true,
 				show_tab_indicators = true,
-				separator_style = "thin",
+				separator_style = "slant",
 				always_show_bufferline = true,
 			},
-		},
+		}
 	},
-
-	-- Dashboard
-	{
-		"goolord/alpha-nvim",
-		event = "VimEnter",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			local alpha = require("alpha")
-			local dashboard = require("alpha.themes.dashboard")
-
-			dashboard.section.header.val = {
-				"                                                     ",
-				"  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-				"  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-				"  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-				"  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-				"  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-				"  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-				"                                                     ",
-			}
-
-			dashboard.section.buttons.val = {
-				dashboard.button("f", "  Find file", "<cmd>Telescope find_files<CR>"),
-				dashboard.button("e", "  New file", "<cmd>enew<CR>"),
-				dashboard.button("r", "  Recent files", "<cmd>Telescope oldfiles<CR>"),
-				dashboard.button("g", "  Find text", "<cmd>Telescope live_grep<CR>"),
-				dashboard.button("c", "  Configuration", "<cmd>e $MYVIMRC<CR>"),
-				dashboard.button("t", "  Themes", "<cmd>Themery<CR>"),
-				dashboard.button("q", "  Quit", "<cmd>qa<CR>"),
-			}
-
-			dashboard.section.footer.val = "Neovim - Vanilla Config"
-
-			alpha.setup(dashboard.opts)
-
-			-- Disable folding on alpha buffer
-			vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
-		end,
-	},
-
-	-- Terminal
-	{
+	{ -- Terminal
 		"akinsho/toggleterm.nvim",
 		version = "*",
 		keys = {
@@ -180,9 +142,8 @@ return {
 			},
 		},
 	},
-
-	-- Color preview
-	{
+	
+	{ -- Color preview
 		"NvChad/nvim-colorizer.lua",
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {

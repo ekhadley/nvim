@@ -3,12 +3,19 @@ return {
 	-- File explorer
 	{
 		"nvim-tree/nvim-tree.lua",
-		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+		cmd = { "NvimTreeToggle" },
 		keys = {
 			{ "<C-b>", "<cmd>NvimTreeToggle<CR>", desc = "Toggle file explorer" },
-			{ "<leader>e", "<cmd>NvimTreeFocus<CR>", desc = "Focus file explorer" },
 		},
 		opts = {
+			on_attach = function(bufnr)
+				local api = require("nvim-tree.api")
+				api.config.mappings.default_on_attach(bufnr)
+				vim.keymap.set("n", "<Tab>", function()
+					api.node.open.edit()
+					api.tree.focus()
+				end, { buffer = bufnr, desc = "Open and stay" })
+			end,
 			filters = {
 				dotfiles = false,
 			},
@@ -41,6 +48,7 @@ return {
 			renderer = {
 				root_folder_label = false,
 				highlight_git = true,
+                special_files = {},
 				highlight_opened_files = "none",
 				indent_markers = {
 					enable = true,
@@ -66,13 +74,20 @@ return {
 							arrow_closed = "",
 						},
 						git = {
-							unstaged = "✗",
+							unstaged = "",
 							staged = "✓",
 							unmerged = "",
 							renamed = "➜",
-							untracked = "★",
+							untracked = "",
 							deleted = "",
-							ignored = "◌",
+							ignored = "",
+							-- unstaged = "✗",
+							-- staged = "✓",
+							-- unmerged = "",
+							-- renamed = "➜",
+							-- untracked = "★",
+							-- deleted = "",
+							-- ignored = "◌",
 						},
 					},
 				},
@@ -193,10 +208,19 @@ return {
 			end,
 		},
 	},
-
 	-- Plenary (dependency)
 	{
 		"nvim-lua/plenary.nvim",
 		lazy = true,
+	},
+
+	-- Easy motion
+	{
+		"smoka7/hop.nvim",
+		keys = {
+			{ "s", "<cmd>HopWord<CR>", desc = "Hop to word" },
+			{ "S", "<cmd>HopChar1<CR>", desc = "Hop to char" },
+		},
+		opts = { keys = 'asdfqwerzxcvtgbplmokniyjh' },
 	},
 }
