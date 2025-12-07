@@ -218,9 +218,19 @@ return {
 	{
 		"smoka7/hop.nvim",
 		keys = {
-			{ "s", "<cmd>HopWord<CR>", desc = "Hop to word" },
-			{ "S", "<cmd>HopChar1<CR>", desc = "Hop to char" },
+			{ "s", "<cmd>HopWord<CR>", mode = { "n", "v" }, desc = "Hop to word" },
+			{ "S", "<cmd>HopChar1<CR>", mode = { "n", "v" }, desc = "Hop to char" },
 		},
 		opts = { keys = 'asdfqwerzxcvtgbplmokniyjh' },
 	},
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        lazy=false,
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        opts = {},
+    }
 }
