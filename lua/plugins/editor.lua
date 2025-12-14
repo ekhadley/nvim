@@ -208,6 +208,7 @@ return {
 			end,
 		},
 	},
+    --
 	-- Plenary (dependency)
 	{
 		"nvim-lua/plenary.nvim",
@@ -223,14 +224,26 @@ return {
 		},
 		opts = { keys = 'asdfqwerzxcvtgbplmokniyjh' },
 	},
+
     {
         'MeanderingProgrammer/render-markdown.nvim',
-        lazy=false,
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
-        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
-        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-        ---@module 'render-markdown'
-        ---@type render.md.UserConfig
-        opts = {},
-    }
+        lazy = false,
+        opts = {
+            heading = {
+                icons = " ",
+                backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', },
+            },
+            bullet = {},
+            latex = {
+                enabled = true,
+                converter = 'utftex',
+                highlight = 'RenderMarkdownMath',
+                position = 'center',
+            },
+            anti_conceal = {
+                enabled = true,
+                ignore = { head_background = true, }
+            }
+        }
+    },
 }
