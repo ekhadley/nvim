@@ -19,6 +19,7 @@ opt.tabstop = 4
 opt.smartindent = true
 
 -- Search
+opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = true
 opt.incsearch = true
