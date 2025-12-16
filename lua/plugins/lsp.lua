@@ -49,7 +49,7 @@ return {
 			end
 
 			-- LSP servers with default config
-			local servers = { "superhtml", "cssls", "clangd", "zls", "hyprls", "biome", "rust_analyzer", "marksman" }
+			local servers = { "superhtml", "cssls", "clangd", "zls", "hyprls", "biome", "rust_analyzer" }
 			for _, server in ipairs(servers) do
 				vim.lsp.config[server] = { capabilities = capabilities }
 			end
