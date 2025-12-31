@@ -229,21 +229,22 @@ return {
         'MeanderingProgrammer/render-markdown.nvim',
         lazy = false,
         opts = {
+            render_modes = { 'n', 'c', 't', 'i' },
             heading = {
                 icons = " ",
                 backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', },
             },
             bullet = {},
+            code = {
+                inline = { enabled = false },
+            },
             latex = {
                 enabled = true,
                 converter = 'utftex',
                 highlight = 'RenderMarkdownMath',
                 position = 'center',
             },
-            anti_conceal = {
-                enabled = true,
-                ignore = { head_background = true, }
-            }
+            anti_conceal = { enabled = true }
         }
     },
 }

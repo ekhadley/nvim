@@ -37,7 +37,6 @@ opt.showmode = false
 -- Behavior
 opt.splitbelow = true
 opt.splitright = true
-opt.clipboard = "unnamedplus"
 opt.mouse = "a"
 opt.undofile = true
 opt.swapfile = false

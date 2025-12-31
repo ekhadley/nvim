@@ -10,6 +10,14 @@ map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
 map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
 
+-- Word jumping
+map({ "n", "v" }, "<C-h>", "b", { desc = "Jump word backward" })
+map({ "n", "v" }, "<C-l>", "w", { desc = "Jump word forward" })
+map("i", "<C-h>", "<C-o>b", { desc = "Jump word backward" })
+map("i", "<C-l>", "<C-o>w", { desc = "Jump word forward" })
+map("i", "<C-j>", "<Down>", { desc = "Move down" })
+map("i", "<C-k>", "<Up>", { desc = "Move up" })
+
 -- Buffer navigation
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
