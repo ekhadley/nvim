@@ -100,6 +100,14 @@ return {
 					end,
 				},
 			})
+
+			-- Disable buffer source for markdown (keeps snippets)
+			cmp.setup.filetype({ "markdown" }, {
+				sources = cmp.config.sources({
+					{ name = "luasnip" },
+					{ name = "path" },
+				}),
+			})
 		end,
 	},
 

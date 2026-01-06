@@ -100,6 +100,8 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Prev buffer | `<S-Tab>` |
 | Close buffer | `<leader>x` |
 | Toggle comment | `<leader>/` |
+| Copy to system clipboard | `<C-S-c>` (visual) |
+| Paste from system clipboard | `<C-S-v>` |
 
 ### Navigation
 | Action | Binding |
@@ -107,6 +109,10 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Hop to word | `s` |
 | Hop to char | `S` |
 | Window left/down/up/right | `<C-Arrow>` |
+| Word backward | `<C-h>` |
+| Word forward | `<C-l>` |
+| Move down (insert) | `<C-j>` |
+| Move up (insert) | `<C-k>` |
 | Jump backward | `<C-i>` (swapped) |
 | Jump forward | `<C-o>` (swapped) |
 | Scroll down centered | `<C-d>` |
@@ -132,6 +138,7 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Action | Binding |
 |--------|---------|
 | Toggle file explorer | `<C-b>` |
+| Open and stay (nvim-tree) | `<Tab>` |
 | Find files | `<leader>ff` or `<C-e>` |
 | Live grep | `<leader>fw` |
 | Buffers | `<leader>fb` |
@@ -201,5 +208,5 @@ nvim --headless -c "luafile init.lua" -c "quit"
 - Custom lualine theme defined in `lua/lualine_theme.lua` (Gruvbox-based colors)
 - Many default Neovim plugins are disabled in `init.lua` for performance
 - LSP keymaps are set on `LspAttach` event in `lua/core/keymaps.lua`
-- Uses nvim 0.11+ `vim.lsp.config` API for LSP server configuration
+- Uses nvim 0.11+ `vim.lsp.config` and `vim.lsp.enable` API for LSP server configuration
 - Rainbow delimiters use custom highlight groups (`col1`, `col2`, `col3`) defined in treesitter.lua

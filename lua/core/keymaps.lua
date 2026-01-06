@@ -50,6 +50,11 @@ map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
 
+-- System clipboard
+map("v", "<C-S-c>", '"+y', { desc = "Copy to system clipboard" })
+map({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from system clipboard" })
+map("i", "<C-S-v>", '<C-r>+', { desc = "Paste from system clipboard" })
+
 -- Comment (using native neovim comment)
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
