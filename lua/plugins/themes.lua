@@ -16,11 +16,6 @@ return {
 					before = [[vim.opt.background = "dark"]],
 				},
 				{
-					name = "Gruvbox Light",
-					colorscheme = "gruvbox",
-					before = [[vim.opt.background = "light"]],
-				},
-				{
 					name = "Tokyo Night",
 					colorscheme = "tokyonight-night",
 				},
@@ -43,10 +38,6 @@ return {
 				{
 					name = "Catppuccin Frappe",
 					colorscheme = "catppuccin-frappe",
-				},
-				{
-					name = "Catppuccin Latte",
-					colorscheme = "catppuccin-latte",
 				},
 			},
 			livePreview = true,
@@ -73,7 +64,7 @@ return {
 		priority = 1000,
 		config = function()
 			require("gruvbox").setup({
-				terminal_colors = true,
+				terminal_colors = false,
 				undercurl = true,
 				underline = true,
 				bold = true,
@@ -110,7 +101,7 @@ return {
 		opts = {
 			style = "night",
 			transparent = false,
-			terminal_colors = true,
+			terminal_colors = false,
 		},
 	},
 
