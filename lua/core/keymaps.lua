@@ -4,6 +4,10 @@ local map = vim.keymap.set
 -- General
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
+-- Command abbreviations
+vim.cmd.cnoreabbrev('Q', 'qa')
+vim.cmd.cnoreabbrev('W', 'wa')
+
 -- Window navigation
 map("n", "<C-Left>", "<C-w>h", { desc = "Window left" })
 map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
