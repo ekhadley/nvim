@@ -244,6 +244,9 @@ return {
                 highlight = 'RenderMarkdownMath',
                 position = 'center',
             },
+            pipe_table = {
+                preset = "round",
+            },
             anti_conceal = { enabled = true }
         }
     },

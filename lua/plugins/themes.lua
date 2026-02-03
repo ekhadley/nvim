@@ -11,6 +11,10 @@ return {
 		opts = {
 			themes = {
 				{
+					name = "Walrs (Dynamic)",
+					colorscheme = "walrs",
+				},
+				{
 					name = "Gruvbox Dark",
 					colorscheme = "gruvbox",
 					before = [[vim.opt.background = "dark"]],
