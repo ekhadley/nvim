@@ -43,6 +43,8 @@ opt.swapfile = false
 opt.updatetime = 250
 opt.timeoutlen = 400
 opt.fillchars = { eob = " " }
+opt.list = true
+opt.listchars = { lead = '·' }
 
 -- Completion
 opt.completeopt = "menu,menuone,noselect"
