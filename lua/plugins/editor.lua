@@ -231,12 +231,12 @@ return {
         opts = {
             render_modes = { 'n', 'c', 't', 'i' },
             heading = {
-                icons = " ",
+                icons = { " " },
                 backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', },
             },
             bullet = {},
             code = {
-                inline = { enabled = false },
+                inline = false,
             },
             latex = {
                 enabled = true,

@@ -60,6 +60,9 @@ map("v", "<C-S-c>", '"+y', { desc = "Copy to system clipboard" })
 map({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from system clipboard" })
 map("i", "<C-S-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 
+-- Toggle line wrap
+map("n", "<A-S-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
+
 -- Comment (using native neovim comment)
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
