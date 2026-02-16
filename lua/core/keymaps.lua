@@ -4,6 +4,10 @@ local map = vim.keymap.set
 -- General
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
+-- Navigate display lines (wrapped lines)
+map({ "n", "v" }, "j", "gj", { desc = "Down (display line)" })
+map({ "n", "v" }, "k", "gk", { desc = "Up (display line)" })
+
 -- Command abbreviations
 vim.cmd.cnoreabbrev('Q', 'qa')
 vim.cmd.cnoreabbrev('W', 'wa')

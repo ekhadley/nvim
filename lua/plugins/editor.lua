@@ -235,7 +235,7 @@ return {
                 backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', },
             },
             bullet = {
-                highlight = { 'GruvboxYellowSign', 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', 'GruvboxOrangeSign' },
+                highlight = { 'GruvboxOrangeSign', 'GruvboxOrangeSign', 'GruvboxBlueSign', 'GruvboxBlueSign', 'GruvboxRedSign', 'GruvboxRedSign', 'GruvboxPurpleSign', 'GruvboxPurpleSign' },
             },
             code = {
                 inline = false,
