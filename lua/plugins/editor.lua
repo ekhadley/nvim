@@ -234,16 +234,18 @@ return {
                 icons = { " " },
                 backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', },
             },
-            bullet = {},
+            bullet = {
+                highlight = { 'GruvboxYellowSign', 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', 'GruvboxOrangeSign' },
+            },
             code = {
                 inline = false,
             },
-            latex = {
-                enabled = true,
-                converter = 'utftex',
-                highlight = 'RenderMarkdownMath',
-                position = 'center',
-            },
+            -- latex = {
+            --     enabled = true,
+            --     converter = 'utftex',
+            --     highlight = 'RenderMarkdownMath',
+            --     position = 'center',
+            -- },
             pipe_table = {
                 preset = "round",
             },
