@@ -44,7 +44,7 @@ opt.updatetime = 250
 opt.timeoutlen = 400
 opt.fillchars = { eob = " " }
 opt.list = true
-opt.listchars = { lead = '·' }
+opt.listchars = { trail = '·' }
 
 -- Completion
 opt.completeopt = "menu,menuone,noselect"

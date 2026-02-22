@@ -7,6 +7,8 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 -- Navigate display lines (wrapped lines)
 map({ "n", "v" }, "j", "gj", { desc = "Down (display line)" })
 map({ "n", "v" }, "k", "gk", { desc = "Up (display line)" })
+map({ "n", "v" }, "<Down>", "gj", { desc = "Down (display line)" })
+map({ "n", "v" }, "<Up>", "gk", { desc = "Up (display line)" })
 
 -- Command abbreviations
 vim.cmd.cnoreabbrev('Q', 'qa')
@@ -60,7 +62,7 @@ map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
 
 -- System clipboard
-map("v", "<C-S-c>", '"+y', { desc = "Copy to system clipboard" })
+map("v", "<leader>c", '"+y', { desc = "Copy to system clipboard" })
 map({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from system clipboard" })
 map("i", "<C-S-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 
@@ -94,8 +96,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>fm", function() vim.lsp.buf.format({ async = true }) end, opts("Format"))
 
 		-- Diagnostics
-		map("n", "[d", vim.diagnostic.goto_prev, opts("Previous diagnostic"))
-		map("n", "]d", vim.diagnostic.goto_next, opts("Next diagnostic"))
+		map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, opts("Previous diagnostic"))
+		map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, opts("Next diagnostic"))
 		map("n", "<leader>e", vim.diagnostic.open_float, opts("Open diagnostic float"))
 		map("n", "<leader>q", vim.diagnostic.setloclist, opts("Diagnostic list"))
 	end,
