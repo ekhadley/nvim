@@ -219,8 +219,7 @@ return {
 	{
 		"smoka7/hop.nvim",
 		keys = {
-			{ "s", "<cmd>HopWord<CR>", mode = { "n", "v" }, desc = "Hop to word" },
-			{ "S", "<cmd>HopChar1<CR>", mode = { "n", "v" }, desc = "Hop to char" },
+			{ "S", "<cmd>HopWord<CR>", mode = { "n", "v" }, desc = "Hop to word" },
 		},
 		opts = { keys = 'asdfqwerzxcvtgbplmokniyjh' },
 	},
@@ -248,6 +247,11 @@ return {
             -- },
             pipe_table = {
                 preset = "round",
+            },
+            checkbox = {
+                custom = {
+                    tilde = { raw = '[~]', rendered = '󰡖 ', highlight = 'RenderMarkdownWarn' },
+                },
             },
             anti_conceal = { enabled = true }
         }

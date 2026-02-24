@@ -51,6 +51,10 @@ map("v", ">", ">gv", { desc = "Indent right" })
 map("n", "<C-i>", "<C-o>", { desc = "Jump to older position (backward)" })
 map("n", "<C-o>", "<C-i>", { desc = "Jump to newer position (forward)" })
 
+-- Scroll screen without moving cursor's screen position
+map({ "n", "v" }, "<S-Down>", "<C-e>", { desc = "Scroll screen down" })
+map({ "n", "v" }, "<S-Up>", "<C-y>", { desc = "Scroll screen up" })
+
 -- Keep cursor centered when scrolling
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down centered" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up centered" })
@@ -68,6 +72,26 @@ map("i", "<C-S-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 
 -- Toggle line wrap
 map("n", "<A-S-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
+
+-- Toggle markdown checkbox
+map("n", "<leader>[", function()
+	local line = vim.api.nvim_get_current_line()
+	if line:match("%[x%]") then
+		vim.api.nvim_set_current_line((line:gsub("%[x%]", "[ ]", 1)))
+	elseif line:match("%[ %]") then
+		vim.api.nvim_set_current_line((line:gsub("%[ %]", "[x]", 1)))
+	end
+end, { desc = "Toggle markdown checkbox" })
+
+-- Toggle bullet checkbox existence
+map("n", "<leader>]", function()
+	local line = vim.api.nvim_get_current_line()
+	if line:match("^(%s*[%-%*])%s+%[.%]%s") then
+		vim.api.nvim_set_current_line((line:gsub("^(%s*[%-%*])%s+%[.%]%s", "%1 ", 1)))
+	elseif line:match("^(%s*[%-%*])%s") then
+		vim.api.nvim_set_current_line((line:gsub("^(%s*[%-%*])%s", "%1 [ ] ", 1)))
+	end
+end, { desc = "Toggle bullet checkbox" })
 
 -- Comment (using native neovim comment)
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
