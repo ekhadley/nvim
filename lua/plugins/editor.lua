@@ -230,14 +230,16 @@ return {
         opts = {
             render_modes = { 'n', 'c', 't', 'i' },
             heading = {
-                icons = { " " },
-                backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', },
+                icons = {},
+                backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', 'GruvboxRedSign' },
             },
             bullet = {
-                highlight = { 'GruvboxOrangeSign', 'GruvboxOrangeSign', 'GruvboxBlueSign', 'GruvboxBlueSign', 'GruvboxRedSign', 'GruvboxRedSign', 'GruvboxPurpleSign', 'GruvboxPurpleSign' },
+                icons = { '●' },
+                highlight = { 'GruvboxOrange', 'GruvboxOrange', 'GruvboxBlue', 'GruvboxBlue', 'GruvboxRed', 'GruvboxRed', 'GruvboxPurple', 'GruvboxPurple' },
             },
             code = {
-                inline = false,
+                style = 'none',
+                highlight_inline = 'RenderMarkdownCodeInline',
             },
             -- latex = {
             --     enabled = true,

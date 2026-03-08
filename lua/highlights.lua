@@ -62,6 +62,9 @@ vim.api.nvim_set_hl(0, "@comment", { fg = gruvbox.gray, italic = true })
 -- Modules/imports
 vim.api.nvim_set_hl(0, "@module", { fg = gruvbox.yellow })
 
+-- Render-markdown inline code
+vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { fg = gruvbox.gray })
+
 -- Zig LSP Semantic Highlighting (ZLS)
 vim.api.nvim_set_hl(0, "zigStructure", { fg = gruvbox.yellow })
 vim.api.nvim_set_hl(0, "zigKeyword", { fg = gruvbox.red })

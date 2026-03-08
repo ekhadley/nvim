@@ -89,7 +89,7 @@ return {
 				palette_overrides = {},
 				overrides = {},
 				dim_inactive = false,
-				transparent_mode = true,
+				transparent_mode = false,
 			})
 			-- Set default colorscheme
 			vim.cmd.colorscheme("gruvbox")
@@ -104,7 +104,7 @@ return {
 		lazy = true,
 		opts = {
 			style = "night",
-			transparent = true,
+			transparent = false,
 			terminal_colors = false,
 		},
 	},
@@ -116,7 +116,7 @@ return {
 		lazy = true,
 		opts = {
 			flavour = "mocha",
-			transparent_background = true,
+			transparent_background = false,
 			term_colors = true,
 		},
 	},
