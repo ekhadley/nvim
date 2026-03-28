@@ -54,7 +54,8 @@ return {
 					-- Only apply custom highlights for gruvbox
 					local colorscheme = vim.g.colors_name
 					if colorscheme and colorscheme:match("gruvbox") then
-						pcall(require, "highlights")
+						package.loaded["highlights"] = nil
+pcall(require, "highlights")
 					end
 				end,
 			})
@@ -94,7 +95,8 @@ return {
 			-- Set default colorscheme
 			vim.cmd.colorscheme("gruvbox")
 			-- Apply custom highlights
-			pcall(require, "highlights")
+			package.loaded["highlights"] = nil
+pcall(require, "highlights")
 		end,
 	},
 

@@ -37,6 +37,7 @@ vim.api.nvim_set_hl(0, "@type.builtin", { fg = gruvbox.yellow })
 -- Strings
 vim.api.nvim_set_hl(0, "@string", { fg = gruvbox.green })
 vim.api.nvim_set_hl(0, "@character", { fg = gruvbox.green })
+vim.api.nvim_set_hl(0, "@string.python", { fg = gruvbox.yellow })
 vim.api.nvim_set_hl(0, "@string.escape", { fg = gruvbox.orange })
 
 -- Variables

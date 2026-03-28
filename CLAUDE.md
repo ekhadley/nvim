@@ -210,3 +210,7 @@ nvim --headless -c "luafile init.lua" -c "quit"
 - LSP keymaps are set on `LspAttach` event in `lua/core/keymaps.lua`
 - Uses nvim 0.11+ `vim.lsp.config` and `vim.lsp.enable` API for LSP server configuration
 - Rainbow delimiters use custom highlight groups (`col1`, `col2`, `col3`) defined in treesitter.lua
+
+## TODO
+
+- Make a 256-color hardcoded gruvbox dark theme designed to work with ghostty's automatic 256 colorscheme generation
