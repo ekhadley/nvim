@@ -98,6 +98,9 @@ end, { desc = "Toggle bullet checkbox" })
 -- Comment (using native neovim comment)
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
+map("n", "<C-/>", "gcc", { desc = "Toggle comment", remap = true })
+map("v", "<C-/>", "gc", { desc = "Toggle comment", remap = true })
+map("i", "<C-/>", "<Esc>gcca", { desc = "Toggle comment", remap = true })
 
 -- LSP keymaps (set on LspAttach)
 vim.api.nvim_create_autocmd("LspAttach", {

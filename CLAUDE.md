@@ -106,8 +106,8 @@ nvim --headless -c "luafile init.lua" -c "quit"
 ### Navigation
 | Action | Binding |
 |--------|---------|
-| Hop to word | `s` |
-| Hop to char | `S` |
+| Hop word on current line | `s` |
+| Hop to word | `S` |
 | Window left/down/up/right | `<C-Arrow>` |
 | Word backward | `<C-h>` |
 | Word forward | `<C-l>` |

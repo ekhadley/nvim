@@ -25,6 +25,9 @@ opt.hlsearch = true
 opt.incsearch = true
 
 -- Appearance
+opt.guifont = "JetBrains Mono:h10"
+g.neovide_cursor_trail_size = 0
+g.neovide_cursor_animation_length = 0
 opt.termguicolors = true
 opt.cursorline = true
 opt.signcolumn = "yes"
@@ -32,6 +35,7 @@ opt.scrolloff = 8
 opt.sidescrolloff = 8
 opt.wrap = true
 opt.linebreak = true
+opt.breakindent = true
 opt.showmode = false
 
 -- Behavior

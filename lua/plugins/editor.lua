@@ -220,6 +220,7 @@ return {
 		"smoka7/hop.nvim",
 		keys = {
 			{ "S", "<cmd>HopWord<CR>", mode = { "n", "v" }, desc = "Hop to word" },
+			{ "s", "<cmd>HopWordCurrentLine<CR>", mode = { "n", "v" }, desc = "Hop word on current line" },
 		},
 		opts = { keys = 'asdfqwerzxcvtgbplmokniyjh' },
 	},
