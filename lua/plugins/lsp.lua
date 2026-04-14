@@ -27,9 +27,9 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "hrsh7th/cmp-nvim-lsp" },
+		dependencies = { "saghen/blink.cmp" },
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			-- Diagnostic config
 			vim.diagnostic.config({
