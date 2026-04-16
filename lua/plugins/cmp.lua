@@ -37,7 +37,9 @@ return {
 					auto_show_delay_ms = 200,
 					window = { border = "rounded" },
 				},
-				ghost_text = { enabled = true },
+				ghost_text = {
+					enabled = function() return vim.bo.filetype ~= "markdown" end,
+				},
 			},
 			sources = {
 				default = { "lsp", "path", "snippets" },
