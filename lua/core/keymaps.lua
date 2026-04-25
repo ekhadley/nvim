@@ -129,6 +129,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, opts("Next diagnostic"))
 		map("n", "<leader>e", vim.diagnostic.open_float, opts("Open diagnostic float"))
 		map("n", "<leader>q", vim.diagnostic.setloclist, opts("Diagnostic list"))
+
+		-- Highlight references to the symbol under the cursor
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client and client:supports_method("textDocument/documentHighlight") then
+			local group = vim.api.nvim_create_augroup("lsp_document_highlight_" .. bufnr, { clear = true })
+			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+				buffer = bufnr,
+				group = group,
+				callback = vim.lsp.buf.document_highlight,
+			})
+			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+				buffer = bufnr,
+				group = group,
+				callback = vim.lsp.buf.clear_references,
+			})
+		end
 	end,
 })
 

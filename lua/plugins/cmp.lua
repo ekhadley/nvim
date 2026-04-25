@@ -29,7 +29,7 @@ return {
 				menu = {
 					border = "rounded",
 					auto_show = function()
-						return vim.bo.filetype ~= "markdown"
+						return vim.bo.filetype ~= "markdown" and vim.bo.filetype ~= "tex"
 					end,
 				},
 				documentation = {
@@ -38,11 +38,18 @@ return {
 					window = { border = "rounded" },
 				},
 				ghost_text = {
-					enabled = function() return vim.bo.filetype ~= "markdown" end,
+					enabled = function()
+						return vim.bo.filetype ~= "markdown" and vim.bo.filetype ~= "tex"
+					end,
 				},
 			},
 			sources = {
-				default = { "lsp", "path", "snippets" },
+				default = function()
+					if vim.bo.filetype == "tex" then
+						return { "lsp", "path" }
+					end
+					return { "lsp", "path", "snippets" }
+				end,
 			},
 			signature = { enabled = true, window = { border = "rounded" } },
 		},

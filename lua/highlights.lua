@@ -66,10 +66,6 @@ vim.api.nvim_set_hl(0, "@module", { fg = gruvbox.yellow })
 -- Render-markdown inline code
 vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { fg = gruvbox.gray })
 
--- Search highlights (slightly lighter than gruvbox bg #282828)
-vim.api.nvim_set_hl(0, "Search",    { bg = "#504945", fg = "NONE" })
-vim.api.nvim_set_hl(0, "IncSearch", { bg = "#665c54", fg = "NONE", bold = true })
-vim.api.nvim_set_hl(0, "CurSearch", { bg = "#665c54", fg = "NONE", bold = true })
 
 -- Zig LSP Semantic Highlighting (ZLS)
 vim.api.nvim_set_hl(0, "zigStructure", { fg = gruvbox.yellow })

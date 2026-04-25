@@ -88,7 +88,14 @@ pcall(require, "highlights")
 				inverse = true,
 				contrast = "",
 				palette_overrides = {},
-				overrides = {},
+				overrides = {
+					LspReferenceText  = { bg = "#504945", fg = "NONE", bold = false, reverse = false },
+					LspReferenceRead  = { bg = "#504945", fg = "NONE", bold = false, reverse = false },
+					LspReferenceWrite = { bg = "#504945", fg = "NONE", bold = false, reverse = false },
+					Search    = { bg = "#504945", fg = "NONE", reverse = false },
+					IncSearch = { bg = "#665c54", fg = "NONE", bold = true, reverse = false },
+					CurSearch = { bg = "#665c54", fg = "NONE", bold = true, reverse = false },
+				},
 				dim_inactive = false,
 				transparent_mode = false,
 			})

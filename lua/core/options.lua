@@ -11,6 +11,7 @@ opt.number = true
 opt.relativenumber = false
 opt.numberwidth = 2
 opt.ruler = false
+opt.statuscolumn = "%s%=%{v:lnum-1} "
 
 -- Indentation
 opt.expandtab = true
