@@ -208,9 +208,10 @@ nvim --headless -c "luafile init.lua" -c "quit"
 
 - Custom filetype detection for HyprLand config files is in `lua/core/autocmds.lua`
 - Custom Gruvbox syntax highlights are applied via `lua/highlights.lua` (loaded on ColorScheme event, only for gruvbox)
+- Search/IncSearch/CurSearch and LspReference* highlights live in gruvbox.nvim's `overrides` field in `lua/plugins/themes.lua` (not `highlights.lua`) — gruvbox re-applies these groups internally, so the `overrides` table is the only place that wins. Always include `reverse = false` when overriding, since gruvbox's `inverse = true` defaults to reverse on those groups.
 - Custom lualine theme defined in `lua/lualine_theme.lua` (Gruvbox-based colors)
 - Many default Neovim plugins are disabled in `init.lua` for performance
-- LSP keymaps are set on `LspAttach` event in `lua/core/keymaps.lua`
+- LSP keymaps and document-highlight autocmds (CursorHold → highlight refs to symbol under cursor, CursorMoved → clear) are set on `LspAttach` event in `lua/core/keymaps.lua`
 - Uses nvim 0.11+ `vim.lsp.config` and `vim.lsp.enable` API for LSP server configuration
 - Rainbow delimiters use custom highlight groups (`col1`, `col2`, `col3`) defined in treesitter.lua
 
