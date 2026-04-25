@@ -109,6 +109,7 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Hop word on current line | `s` |
 | Hop to word | `S` |
 | Window left/down/up/right | `<C-Arrow>` |
+| Down/up 8 lines | `<S-Down>` / `<S-Up>` |
 | Word backward | `<C-h>` |
 | Word forward | `<C-l>` |
 | Move down (insert) | `<C-j>` |
@@ -128,11 +129,12 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Indent left (stay visual) | `<` |
 | Indent right (stay visual) | `>` |
 
-### Treesitter Selection
+### Treesitter Selection (all filetypes except markdown)
 | Action | Binding |
 |--------|---------|
-| Init/increment selection | `<C-space>` |
-| Decrement selection | `<bs>` |
+| Init selection (normal mode) | `<C-space>` |
+| Grow selection (visual mode) | `<C-space>` |
+| Shrink selection (visual mode) | `<BS>` |
 
 ### File Explorer & Search
 | Action | Binding |
@@ -143,6 +145,7 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Live grep | `<leader>fw` |
 | Buffers | `<leader>fb` |
 | Recent files | `<leader>fo` |
+| Recent directories (zoxide, cd on select) | `<leader>fd` |
 | Help tags | `<leader>fh` |
 | Resume search | `<leader>fr` |
 | Git commits | `<leader>gc` |

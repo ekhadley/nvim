@@ -49,3 +49,14 @@ autocmd("FileType", {
 vim.filetype.add({
 	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
+
+-- On Neovide launch with no file args, open zoxide directory picker
+autocmd("VimEnter", {
+	group = general,
+	callback = function()
+		if vim.g.neovide and vim.fn.argc() == 0 then
+			vim.cmd("Telescope zoxide list")
+		end
+	end,
+	desc = "Neovide: open zoxide picker on empty launch",
+})

@@ -53,9 +53,9 @@ map("v", ">", ">gv", { desc = "Indent right" })
 map("n", "<C-i>", "<C-o>", { desc = "Jump to older position (backward)" })
 map("n", "<C-o>", "<C-i>", { desc = "Jump to newer position (forward)" })
 
--- Scroll screen without moving cursor's screen position
-map({ "n", "v" }, "<S-Down>", "<C-e>", { desc = "Scroll screen down" })
-map({ "n", "v" }, "<S-Up>", "<C-y>", { desc = "Scroll screen up" })
+-- Jump 8 lines
+map({ "n", "v" }, "<S-Down>", "8gj", { desc = "Down 8 lines" })
+map({ "n", "v" }, "<S-Up>", "8gk", { desc = "Up 8 lines" })
 
 -- Keep cursor centered when scrolling
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down centered" })

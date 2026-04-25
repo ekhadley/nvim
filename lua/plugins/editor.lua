@@ -102,6 +102,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
+			"jvgrootveld/telescope-zoxide",
 		},
 		keys = {
 			{ "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find files" },
@@ -110,10 +111,15 @@ return {
 			{ "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help tags" },
 			{ "<leader>fo", "<cmd>Telescope oldfiles<CR>", desc = "Recent files" },
 			{ "<leader>fr", "<cmd>Telescope resume<CR>", desc = "Resume last search" },
+			{ "<leader>fd", "<cmd>Telescope zoxide list<CR>", desc = "Recent directories (zoxide)" },
 			{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Git commits" },
 			{ "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
 			{ "<C-e>", "<cmd>Telescope find_files<CR>", desc = "Find files" },
 		},
+		config = function(_, opts)
+			require("telescope").setup(opts)
+			require("telescope").load_extension("zoxide")
+		end,
 		opts = {
 			defaults = {
 				prompt_prefix = "   ",
@@ -224,6 +230,20 @@ return {
 		},
 		opts = { keys = 'asdfqwerzxcvtgbplmokniyjh' },
 	},
+
+    {
+        'lervag/vimtex',
+        lazy = false,
+        init = function()
+            vim.g.vimtex_view_method = 'general'
+            vim.g.vimtex_view_automatic = 0
+            vim.g.vimtex_mappings_enabled = 1
+            vim.g.vimtex_quickfix_mode = 0
+            vim.g.vimtex_compiler_latexmk = {
+                out_dir = 'build',
+            }
+        end,
+    },
 
     {
         'MeanderingProgrammer/render-markdown.nvim',

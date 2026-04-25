@@ -1,52 +1,70 @@
--- Treesitter configuration
+-- Treesitter configuration (main branch rewrite, requires nvim 0.12+)
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
 		build = ":TSUpdate",
-		event = { "BufReadPost", "BufNewFile" },
-		cmd = { "TSInstall", "TSUpdate", "TSUpdateSync" },
-		opts = {
-			ensure_installed = {
-				"lua",
-				"vim",
-				"vimdoc",
-				"bash",
-				"cpp",
-				"c",
-				"python",
-				"markdown",
-				"markdown_inline",
-				"yuck",
-				"zig",
-				"hyprlang",
-				"json",
-				"yaml",
-				"toml",
-				"rust",
-				"html",
-				"css",
-				"javascript",
-				"typescript",
-			},
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = false,
-			},
-			indent = {
-				enable = true,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
-					scope_incremental = false,
-					node_decremental = "<bs>",
-				},
-			},
-		},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
+		config = function()
+			require("nvim-treesitter").install({
+				"lua", "vim", "vimdoc", "bash", "cpp", "c", "python",
+				"markdown", "markdown_inline", "yuck", "zig", "hyprlang",
+				"json", "yaml", "toml", "rust", "html", "css",
+				"javascript", "typescript",
+			})
+
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(ev)
+					if pcall(vim.treesitter.start, ev.buf) then
+						vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
+				end,
+			})
+
+			-- Incremental selection (skip markdown). <C-space> grows, <BS> shrinks.
+			local sel_stack = {}
+			local function smallest_named()
+				local node = vim.treesitter.get_node()
+				while node and not node:named() do node = node:parent() end
+				return node
+			end
+			local function select_node(node)
+				local sr, sc, er, ec = node:range()
+				if ec == 0 and er > sr then
+					er = er - 1
+					ec = #vim.fn.getline(er + 1)
+				end
+				vim.cmd([[execute "normal! \<Esc>"]])
+				vim.api.nvim_win_set_cursor(0, { sr + 1, sc })
+				vim.cmd("normal! v")
+				vim.api.nvim_win_set_cursor(0, { er + 1, math.max(ec - 1, 0) })
+			end
+			local function init_sel()
+				local node = smallest_named()
+				if not node then return end
+				sel_stack[vim.api.nvim_get_current_buf()] = { node }
+				select_node(node)
+			end
+			local function grow_sel()
+				local buf = vim.api.nvim_get_current_buf()
+				local stack = sel_stack[buf]
+				if not stack or #stack == 0 then return init_sel() end
+				local parent = stack[#stack]:parent()
+				while parent and not parent:named() do parent = parent:parent() end
+				if not parent then return end
+				table.insert(stack, parent)
+				select_node(parent)
+			end
+			local function shrink_sel()
+				local stack = sel_stack[vim.api.nvim_get_current_buf()]
+				if not stack or #stack <= 1 then return end
+				table.remove(stack)
+				select_node(stack[#stack])
+			end
+			local function active() return vim.bo.filetype ~= "markdown" end
+			vim.keymap.set("n", "<C-space>", function() if active() then init_sel() end end, { desc = "TS: init selection" })
+			vim.keymap.set("x", "<C-space>", function() if active() then grow_sel() end end, { desc = "TS: grow selection" })
+			vim.keymap.set("x", "<BS>", function() if active() then shrink_sel() end end, { desc = "TS: shrink selection" })
 
 			-- Workaround: nvim nightly can invalidate TSNode objects during reparse,
 			-- causing get_node_text to crash on :range(). Re-register with pcall guard.
