@@ -21,6 +21,10 @@ map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
 map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
 
+-- Select inside word
+map("n", "W", "viw", { desc = "Select inside word" })
+map("x", "W", "iw", { desc = "Inside word" })
+
 -- Word jumping
 map({ "n", "v" }, "<C-h>", "b", { desc = "Jump word backward" })
 map({ "n", "v" }, "<C-l>", "w", { desc = "Jump word forward" })
@@ -67,10 +71,17 @@ map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
 
+-- Select all
+map("n", "<C-a>", "ggVG", { desc = "Select all" })
+map("i", "<C-a>", "<Esc>ggVG", { desc = "Select all" })
+
 -- System clipboard
 map("v", "<leader>c", '"+y', { desc = "Copy to system clipboard" })
 map({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from system clipboard" })
 map("i", "<C-S-v>", '<C-r>+', { desc = "Paste from system clipboard" })
+map("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
+map({ "n", "v" }, "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+map("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 
 -- Toggle line wrap
 map("n", "<A-S-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })

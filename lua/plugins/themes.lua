@@ -95,6 +95,7 @@ pcall(require, "highlights")
 					Search    = { bg = "#504945", fg = "NONE", reverse = false },
 					IncSearch = { bg = "#665c54", fg = "NONE", bold = true, reverse = false },
 					CurSearch = { bg = "#665c54", fg = "NONE", bold = true, reverse = false },
+					["@constant.builtin.python"] = { link = "GruvboxPurple" },
 				},
 				dim_inactive = false,
 				transparent_mode = false,

@@ -50,6 +50,17 @@ vim.filetype.add({
 	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
 
+-- Enable spell checking for LaTeX
+-- autocmd("FileType", {
+-- 	group = general,
+-- 	pattern = { "tex", "plaintex", "latex" },
+-- 	callback = function()
+-- 		vim.opt_local.spell = true
+-- 		vim.opt_local.spelllang = "en_us"
+-- 	end,
+-- 	desc = "Enable spell checking for LaTeX",
+-- })
+
 -- On Neovide launch with no file args, open zoxide directory picker
 autocmd("VimEnter", {
 	group = general,
