@@ -21,10 +21,6 @@ map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
 map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
 
--- Select inside word
-map("n", "W", "viw", { desc = "Select inside word" })
-map("x", "W", "iw", { desc = "Inside word" })
-
 -- Word jumping
 map({ "n", "v" }, "<C-h>", "b", { desc = "Jump word backward" })
 map({ "n", "v" }, "<C-l>", "w", { desc = "Jump word forward" })
