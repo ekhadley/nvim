@@ -96,8 +96,10 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Command mode | `;` |
 | Save file | `<C-s>` |
 | New buffer | `<leader>b` |
-| Next buffer | `<Tab>` |
-| Prev buffer | `<S-Tab>` |
+| Next buffer | `<Tab>` or `<C-PageDown>` |
+| Prev buffer | `<S-Tab>` or `<C-PageUp>` |
+| Move buffer right | `<C-S-PageDown>` |
+| Move buffer left | `<C-S-PageUp>` |
 | Close buffer | `<leader>x` |
 | Toggle comment | `<leader>/` |
 | Copy to system clipboard | `<C-S-c>` (visual) |

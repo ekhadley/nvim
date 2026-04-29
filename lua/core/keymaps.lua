@@ -34,6 +34,10 @@ map("i", "<C-k>", "<Up>", { desc = "Move up" })
 -- Buffer navigation
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+map("n", "<C-PageDown>", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
+map("n", "<C-PageUp>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
+map("n", "<C-S-PageDown>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
+map("n", "<C-S-PageUp>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
 map("n", "<leader>x", function()
     local buf = vim.api.nvim_get_current_buf()
     if vim.bo[buf].filetype == "NvimTree" then return end
