@@ -71,6 +71,9 @@ map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
 
+-- Paste without overwriting register in visual mode
+map("x", "P", '"_dP', { desc = "Paste without overwriting register" })
+
 -- System clipboard
 map("v", "<leader>c", '"+y', { desc = "Copy to system clipboard" })
 map({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from system clipboard" })
