@@ -70,9 +70,7 @@ return {
 	{ -- Terminal
 		"akinsho/toggleterm.nvim",
 		version = "*",
-		keys = {
-			{ "<C-`>", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "Toggle terminal" },
-		},
+		event = "VeryLazy",
 		opts = {
 			size = function(term)
 				if term.direction == "horizontal" then

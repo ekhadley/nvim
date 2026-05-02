@@ -16,14 +16,14 @@ vim.cmd.cnoreabbrev('W', 'wa')
 vim.cmd.cnoreabbrev('WQ', 'wqa')
 
 -- Window navigation
-map("n", "<C-Left>", "<C-w>h", { desc = "Window left" })
 map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
-map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
 
 -- Word jumping
 map({ "n", "v" }, "<C-h>", "b", { desc = "Jump word backward" })
 map({ "n", "v" }, "<C-l>", "w", { desc = "Jump word forward" })
+map({ "n", "v" }, "<C-Left>", "b", { desc = "Jump word backward" })
+map({ "n", "v" }, "<C-Right>", "w", { desc = "Jump word forward" })
 map("i", "<C-h>", "<C-o>b", { desc = "Jump word backward" })
 map("i", "<C-l>", "<C-o>w", { desc = "Jump word forward" })
 map("i", "<C-S-h>", "<Esc>vb", { desc = "Select word backward" })
@@ -71,10 +71,6 @@ map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
 
--- Select all
-map("n", "<C-a>", "ggVG", { desc = "Select all" })
-map("i", "<C-a>", "<Esc>ggVG", { desc = "Select all" })
-
 -- System clipboard
 map("v", "<leader>c", '"+y', { desc = "Copy to system clipboard" })
 map({ "n", "v" }, "<C-S-v>", '"+p', { desc = "Paste from system clipboard" })
@@ -87,24 +83,44 @@ map("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 map("n", "<A-S-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
 
 -- Toggle markdown checkbox
-map("n", "<leader>[", function()
-	local line = vim.api.nvim_get_current_line()
+local function toggle_checkbox(line)
 	if line:match("%[x%]") then
-		vim.api.nvim_set_current_line((line:gsub("%[x%]", "[ ]", 1)))
+		return (line:gsub("%[x%]", "[ ]", 1))
 	elseif line:match("%[ %]") then
-		vim.api.nvim_set_current_line((line:gsub("%[ %]", "[x]", 1)))
+		return (line:gsub("%[ %]", "[x]", 1))
 	end
+	return line
+end
+
+local function toggle_bullet_checkbox(line)
+	if line:match("^(%s*[%-%*])%s+%[.%]%s") then
+		return (line:gsub("^(%s*[%-%*])%s+%[.%]%s", "%1 ", 1))
+	elseif line:match("^(%s*[%-%*])%s") then
+		return (line:gsub("^(%s*[%-%*])%s", "%1 [ ] ", 1))
+	end
+	return line
+end
+
+local function apply_to_visual_range(fn)
+	local s = vim.fn.line("v")
+	local e = vim.fn.line(".")
+	if s > e then s, e = e, s end
+	for lnum = s, e do
+		vim.fn.setline(lnum, fn(vim.fn.getline(lnum)))
+	end
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+end
+
+map("n", "<leader>[", function()
+	vim.api.nvim_set_current_line(toggle_checkbox(vim.api.nvim_get_current_line()))
 end, { desc = "Toggle markdown checkbox" })
+map("x", "<leader>[", function() apply_to_visual_range(toggle_checkbox) end, { desc = "Toggle markdown checkbox" })
 
 -- Toggle bullet checkbox existence
 map("n", "<leader>]", function()
-	local line = vim.api.nvim_get_current_line()
-	if line:match("^(%s*[%-%*])%s+%[.%]%s") then
-		vim.api.nvim_set_current_line((line:gsub("^(%s*[%-%*])%s+%[.%]%s", "%1 ", 1)))
-	elseif line:match("^(%s*[%-%*])%s") then
-		vim.api.nvim_set_current_line((line:gsub("^(%s*[%-%*])%s", "%1 [ ] ", 1)))
-	end
+	vim.api.nvim_set_current_line(toggle_bullet_checkbox(vim.api.nvim_get_current_line()))
 end, { desc = "Toggle bullet checkbox" })
+map("x", "<leader>]", function() apply_to_visual_range(toggle_bullet_checkbox) end, { desc = "Toggle bullet checkbox" })
 
 -- Comment (using native neovim comment)
 map("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })

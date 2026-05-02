@@ -110,10 +110,10 @@ nvim --headless -c "luafile init.lua" -c "quit"
 |--------|---------|
 | Hop word on current line | `s` |
 | Hop to word | `S` |
-| Window left/down/up/right | `<C-Arrow>` |
+| Window down/up | `<C-Down>` / `<C-Up>` |
 | Down/up 8 lines | `<S-Down>` / `<S-Up>` |
-| Word backward | `<C-h>` |
-| Word forward | `<C-l>` |
+| Word backward | `<C-h>` or `<C-Left>` |
+| Word forward | `<C-l>` or `<C-Right>` |
 | Move down (insert) | `<C-j>` |
 | Move up (insert) | `<C-k>` |
 | Jump backward | `<C-i>` (swapped) |
