@@ -3,6 +3,7 @@ local map = vim.keymap.set
 
 -- General
 map("n", ";", ":", { desc = "CMD enter command mode" })
+map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 
 -- Navigate display lines (wrapped lines)
 map({ "n", "v" }, "j", "gj", { desc = "Down (display line)" })
@@ -74,9 +75,6 @@ map("n", "N", "Nzzzv", { desc = "Previous search result centered" })
 -- Save file
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
-
--- Paste without overwriting register in visual mode
-map("x", "P", '"_dP', { desc = "Paste without overwriting register" })
 
 -- System clipboard
 map("v", "<leader>c", '"+y', { desc = "Copy to system clipboard" })

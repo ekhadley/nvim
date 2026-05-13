@@ -68,6 +68,29 @@ return {
 			}
 			vim.lsp.enable("basedpyright")
 
+			-- lua_ls: don't index $HOME when opening a loose lua file (e.g. ~/.config/hypr/hyprland.lua)
+			-- https://github.com/LuaLS/lua-language-server/issues/2975
+			vim.lsp.config.lua_ls = {
+				capabilities = capabilities,
+				on_init = function(client)
+					if client.workspace_folders then
+						local path = client.workspace_folders[1].name
+						if path ~= vim.fn.expand("~") and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc")) then
+							return
+						end
+					end
+					client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua or {}, {
+						runtime = { version = "LuaJIT" },
+						workspace = {
+							checkThirdParty = false,
+							library = { vim.env.VIMRUNTIME },
+						},
+					})
+				end,
+				settings = { Lua = {} },
+			}
+			vim.lsp.enable("lua_ls")
+
 			-- Yuck LSP (requires manual start per buffer)
 			vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 				pattern = { "*.yuck" },
