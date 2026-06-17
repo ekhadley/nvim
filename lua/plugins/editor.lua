@@ -263,12 +263,7 @@ return {
                 style = 'none',
                 highlight_inline = 'RenderMarkdownCodeInline',
             },
-            -- latex = {
-            --     enabled = true,
-            --     converter = 'utftex',
-            --     highlight = 'RenderMarkdownMath',
-            --     position = 'center',
-            -- },
+            latex = { enabled = false },
             pipe_table = {
                 preset = "round",
             },

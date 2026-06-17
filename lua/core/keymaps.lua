@@ -19,6 +19,8 @@ vim.cmd.cnoreabbrev('WQ', 'wqa')
 -- Window navigation
 map("n", "<C-Down>", "<C-w>j", { desc = "Window down" })
 map("n", "<C-Up>", "<C-w>k", { desc = "Window up" })
+map("n", "<C-Left>", "<C-w>h", { desc = "Window left" })
+map("n", "<C-Right>", "<C-w>l", { desc = "Window right" })
 
 -- Select inside word
 map("n", "W", "viw", { desc = "Select inside word" })
@@ -27,8 +29,8 @@ map("x", "W", "iw", { desc = "Inside word" })
 -- Word jumping
 map({ "n", "v" }, "<C-h>", "b", { desc = "Jump word backward" })
 map({ "n", "v" }, "<C-l>", "w", { desc = "Jump word forward" })
-map({ "n", "v" }, "<C-Left>", "b", { desc = "Jump word backward" })
-map({ "n", "v" }, "<C-Right>", "w", { desc = "Jump word forward" })
+map("v", "<C-Left>", "b", { desc = "Jump word backward" })
+map("v", "<C-Right>", "w", { desc = "Jump word forward" })
 map("i", "<C-h>", "<C-o>b", { desc = "Jump word backward" })
 map("i", "<C-l>", "<C-o>w", { desc = "Jump word forward" })
 map("i", "<C-S-h>", "<Esc>vb", { desc = "Select word backward" })
