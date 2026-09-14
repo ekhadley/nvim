@@ -45,6 +45,16 @@ autocmd("FileType", {
 	desc = "Close with q",
 })
 
+-- Indent guides: leading spaces render as one guide char per shiftwidth
+autocmd({ "BufWinEnter", "OptionSet" }, {
+	group = general,
+	pattern = { "*", "shiftwidth" },
+	callback = function()
+		vim.opt_local.listchars:append({ leadmultispace = "│" .. string.rep(" ", vim.bo.shiftwidth - 1) })
+	end,
+	desc = "Indent guide width follows shiftwidth",
+})
+
 -- Custom filetype detection for HyprLand
 vim.filetype.add({
 	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },

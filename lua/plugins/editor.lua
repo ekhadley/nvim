@@ -256,7 +256,7 @@ return {
                 backgrounds = { 'GruvboxYellowSign', 'GruvboxGreenSign', 'GruvboxBlueSign', 'GruvboxPurpleSign', 'GruvboxOrangeSign', 'GruvboxRedSign' },
             },
             bullet = {
-                icons = { '●' },
+                -- icons = { '●' },
                 highlight = { 'GruvboxOrange', 'GruvboxOrange', 'GruvboxBlue', 'GruvboxBlue', 'GruvboxRed', 'GruvboxRed', 'GruvboxPurple', 'GruvboxPurple' },
             },
             code = {
@@ -272,6 +272,7 @@ return {
                     tilde = { raw = '[~]', rendered = '󰡖 ', highlight = 'RenderMarkdownWarn' },
                 },
             },
+            html = { comment = { conceal = false } },
             anti_conceal = { enabled = true }
         }
     },

@@ -4,33 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-This is a vanilla Neovim configuration using lazy.nvim as the plugin manager. It was migrated from NvChad to use community plugins directly for full control over the configuration.
-
-### Core Entry Point
-
-- `init.lua` - Bootstraps lazy.nvim plugin manager and loads all modules
+Vanilla Neovim configuration using lazy.nvim as the plugin manager. Targets nvim 0.12+ (uses `vim.lsp.config`/`vim.lsp.enable` and the nvim-treesitter `main` branch).
 
 ### Module Structure
 
 ```
 ~/.config/nvim/
-├── init.lua                    # Entry point, bootstrap lazy.nvim
+├── init.lua                    # Entry point, bootstraps lazy.nvim, loads core + notes + search_hud
 ├── lua/
 │   ├── core/
 │   │   ├── options.lua         # vim.opt settings
-│   │   ├── keymaps.lua         # all keybindings (including LSP keymaps on LspAttach)
-│   │   └── autocmds.lua        # autocommands (including HyprLand filetype detection)
+│   │   ├── keymaps.lua         # all keybindings (LSP keymaps + document-highlight autocmds on LspAttach)
+│   │   └── autocmds.lua        # autocommands (indent guides, hyprlang filetype, Neovide zoxide launch)
 │   ├── plugins/
 │   │   ├── init.lua            # imports all plugin modules
-│   │   ├── lsp.lua             # LSP + mason config (servers, diagnostics)
-│   │   ├── cmp.lua             # completion (nvim-cmp) config
-│   │   ├── treesitter.lua      # treesitter + rainbow-delimiters config
-│   │   ├── ui.lua              # lualine, bufferline, toggleterm, which-key, indent-blankline, colorizer
-│   │   ├── editor.lua          # nvim-tree, telescope, gitsigns, hop, render-markdown
-│   │   └── themes.lua          # themery + gruvbox, tokyonight, catppuccin
+│   │   ├── lsp.lua             # nvim-lspconfig: servers, diagnostics
+│   │   ├── cmp.lua             # blink.cmp + LuaSnip
+│   │   ├── treesitter.lua      # treesitter (main branch) + incremental selection + rainbow-delimiters
+│   │   ├── ui.lua              # lualine, bufferline, which-key, colorizer
+│   │   ├── editor.lua          # nvim-tree, telescope(+zoxide), gitsigns, hop, vimtex, render-markdown
+│   │   └── themes.lua          # gruvbox (with overrides + theme persistence), tokyonight, catppuccin
 │   ├── highlights.lua          # custom Gruvbox-based syntax highlighting overrides
-│   └── lualine_theme.lua       # custom Gruvbox-based lualine statusline theme
-├── colors/                     # color-related files (some duplicates of lua/ files)
+│   ├── lualine_theme.lua       # custom Gruvbox-based lualine statusline theme
+│   ├── notes.lua               # :NoteSidecar — right-hand todo column over ~/Notes/{todo,global_todo}.md
+│   └── search_hud.lua          # floating top-right HUD: live pattern, match count, regex errors for / ? :s
+├── colors/
+│   ├── walrs.lua               # dynamic colorscheme loading ~/.cache/wal/colors-nvim.lua
 │   ├── gruvbox_dark.lua        # gruvbox dark color definitions
 │   ├── highlights.lua          # alternate highlights file
 │   └── lualine_theme.lua       # alternate lualine theme file
@@ -38,53 +37,32 @@ This is a vanilla Neovim configuration using lazy.nvim as the plugin manager. It
 
 ### Active Plugins
 
-**Core UI:**
-- lualine.nvim (statusline, uses custom theme from lualine_theme.lua)
-- bufferline.nvim (buffer tabs)
-- toggleterm.nvim (terminal)
-- which-key.nvim (keybinding hints)
-- indent-blankline.nvim (indent guides)
-- nvim-colorizer.lua (color preview)
-- nvim-web-devicons (icons)
+**UI:** lualine.nvim (custom theme from lualine_theme.lua), bufferline.nvim, which-key.nvim, nvim-colorizer.lua, nvim-web-devicons
 
-**Theming:**
-- themery.nvim (theme switcher)
-- gruvbox.nvim (default theme)
-- tokyonight.nvim
-- catppuccin
+**Theming:** gruvbox.nvim (default), tokyonight.nvim, catppuccin, plus the local `walrs` colorscheme. Theme picker is telescope's colorscheme picker; the chosen theme is written to `stdpath("data")/theme` and restored on startup.
 
-**Editor:**
-- nvim-tree.lua (file explorer)
-- telescope.nvim (fuzzy finder)
-- gitsigns.nvim (git integration)
-- hop.nvim (easy motion)
-- render-markdown.nvim (markdown rendering with LaTeX support)
+**Editor:** nvim-tree.lua, telescope.nvim + telescope-zoxide, gitsigns.nvim, hop.nvim, vimtex, render-markdown.nvim
 
-**LSP & Completion:**
-- nvim-lspconfig (LSP)
-- mason.nvim + mason-lspconfig.nvim (LSP installer)
-- nvim-cmp + sources (completion)
-- LuaSnip + friendly-snippets (snippets)
+**LSP & Completion:** nvim-lspconfig, blink.cmp, LuaSnip + friendly-snippets
 
-**Syntax:**
-- nvim-treesitter (syntax highlighting)
-- rainbow-delimiters.nvim (bracket colorization)
+**Syntax:** nvim-treesitter (main branch), rainbow-delimiters.nvim
 
-### LSP Servers Configured
+Indent guides are native: `listchars` `leadmultispace`, rebuilt per buffer from `shiftwidth` in autocmds.lua. No terminal plugin.
 
-- superhtml, cssls, clangd, zls, basedpyright, hyprls, biome, rust_analyzer
-- yuckls (manual start per buffer)
+### LSP Servers
+
+There is no mason. Servers are installed system-wide (pacman, cargo, npm) and must be on PATH.
+
+- Default config: superhtml, cssls, clangd, zls, hyprls, biome, rust_analyzer
+- basedpyright (typeCheckingMode = basic)
+- lua_ls (on_init avoids indexing $HOME for loose lua files)
+- yuckls (manual `vim.lsp.start` per `*.yuck` buffer)
 
 ## Testing and Development
 
-This is a Neovim configuration, not a software project. Changes are tested by:
-1. Editing the relevant `.lua` configuration files
-2. Reloading Neovim or sourcing the changed file with `:source %`
-3. Verifying the behavior in Neovim
-
-To check for Lua syntax errors:
+Changes are tested by editing the `.lua` files and restarting Neovim. To check for startup errors:
 ```bash
-nvim --headless -c "luafile init.lua" -c "quit"
+nvim --headless -c qa
 ```
 
 ## Key Bindings
@@ -94,49 +72,50 @@ nvim --headless -c "luafile init.lua" -c "quit"
 |--------|---------|
 | Leader | `<Space>` |
 | Command mode | `;` |
+| Clear search highlight + HUD | `<Esc>` |
 | Save file | `<C-s>` |
 | New buffer | `<leader>b` |
 | Next buffer | `<Tab>` or `<PageDown>` |
 | Prev buffer | `<S-Tab>` or `<PageUp>` |
-| Move buffer right | `<S-PageDown>` |
-| Move buffer left | `<S-PageUp>` |
+| Move buffer right/left | `<S-PageDown>` / `<S-PageUp>` |
 | Close buffer | `<leader>x` |
-| Toggle comment | `<leader>/` |
-| Copy to system clipboard | `<C-S-c>` (visual) |
-| Paste from system clipboard | `<C-S-v>` |
+| Toggle comment | `<leader>/` or `<C-/>` (n, v, i) |
+| Copy to system clipboard | `<leader>c` or `<C-c>` (visual) |
+| Paste from system clipboard | `<C-v>` or `<C-S-v>` |
+| Select inside word | `W` |
+| Toggle line wrap | `<A-S-z>` |
+| Toggle markdown `[ ]`/`[x]` | `<leader>[` (n, x) |
+| Add/remove bullet checkbox | `<leader>]` (n, x) |
+| `:Q` / `:W` / `:WQ` | abbreviations for `qa` / `wa` / `wqa` |
+| Todo sidecar | `:NoteSidecar` (`<Tab>` cycles files inside it) |
 
 ### Navigation
 | Action | Binding |
 |--------|---------|
+| `j` / `k` / arrows | move by display line |
 | Hop word on current line | `s` |
 | Hop to word | `S` |
-| Window down/up | `<C-Down>` / `<C-Up>` |
+| Window down/up/left/right | `<C-Down>` / `<C-Up>` / `<C-Left>` / `<C-Right>` |
 | Down/up 8 lines | `<S-Down>` / `<S-Up>` |
-| Word backward | `<C-h>` or `<C-Left>` |
-| Word forward | `<C-l>` or `<C-Right>` |
-| Move down (insert) | `<C-j>` |
-| Move up (insert) | `<C-k>` |
-| Jump backward | `<C-i>` (swapped) |
-| Jump forward | `<C-o>` (swapped) |
-| Scroll down centered | `<C-d>` |
-| Scroll up centered | `<C-u>` |
-| Next search centered | `n` |
-| Prev search centered | `N` |
+| Word backward/forward | `<C-h>` / `<C-l>` (n, v, i) |
+| Select word backward/forward (insert) | `<C-S-h>` / `<C-S-l>` |
+| Move down/up (insert) | `<C-j>` / `<C-k>` |
+| Jump backward/forward | `<C-i>` / `<C-o>` (swapped) |
+| Scroll down/up centered | `<C-d>` / `<C-u>` |
+| Next/prev search centered | `n` / `N` |
 
 ### Visual Mode
 | Action | Binding |
 |--------|---------|
-| Move line up | `K` |
-| Move line down | `J` |
-| Indent left (stay visual) | `<` |
-| Indent right (stay visual) | `>` |
+| Move line up/down | `K` / `J` |
+| Indent left/right (stay visual) | `<` / `>` |
 
 ### Treesitter Selection (all filetypes except markdown)
 | Action | Binding |
 |--------|---------|
-| Init selection (normal mode) | `<C-space>` |
-| Grow selection (visual mode) | `<C-space>` |
-| Shrink selection (visual mode) | `<BS>` |
+| Init selection (normal) | `<C-space>` |
+| Grow selection (visual) | `<C-space>` |
+| Shrink selection (visual) | `<BS>` |
 
 ### File Explorer & Search
 | Action | Binding |
@@ -150,32 +129,26 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | Recent directories (zoxide, cd on select) | `<leader>fd` |
 | Help tags | `<leader>fh` |
 | Resume search | `<leader>fr` |
-| Git commits | `<leader>gc` |
-| Git status | `<leader>gs` |
-
-### Terminal & UI
-| Action | Binding |
-|--------|---------|
-| Terminal | `` <C-`> `` |
+| Git commits / status | `<leader>gc` / `<leader>gs` |
 | Theme picker | `<leader>th` |
 | Which-key (buffer) | `<leader>?` |
 
-### Completion (insert mode)
+### Completion (insert mode, blink.cmp)
 | Action | Binding |
 |--------|---------|
-| Trigger completion | `<C-Space>` |
+| Show / toggle docs | `<C-Space>` |
 | Confirm selection | `<CR>` |
-| Next item / expand snippet | `<Tab>` |
-| Prev item / jump snippet back | `<S-Tab>` |
-| Scroll docs down | `<C-f>` |
-| Scroll docs up | `<C-b>` |
-| Abort completion | `<C-e>` |
+| Next item / snippet forward | `<Tab>` |
+| Prev item / snippet back | `<S-Tab>` |
+| Scroll docs up/down | `<C-b>` / `<C-f>` |
+| Hide | `<C-e>` |
 
-### LSP (available after LspAttach)
+Menu and ghost text are disabled for markdown and tex; tex uses only lsp + path sources.
+
+### LSP (after LspAttach)
 | Action | Binding |
 |--------|---------|
-| Go to definition | `gd` |
-| Go to declaration | `gD` |
+| Go to definition / declaration | `gd` / `gD` |
 | Hover docs | `K` |
 | Go to implementation | `gi` |
 | Signature help | `<C-k>` |
@@ -185,37 +158,31 @@ nvim --headless -c "luafile init.lua" -c "quit"
 | References | `gr` |
 | Format | `<leader>fm` |
 | Prev/next diagnostic | `[d` / `]d` |
-| Diagnostic float | `<leader>e` |
-| Diagnostic list | `<leader>q` |
-| Add workspace folder | `<leader>wa` |
-| Remove workspace folder | `<leader>wr` |
-| List workspace folders | `<leader>wl` |
+| Diagnostic float / list | `<leader>e` / `<leader>q` |
+| Add/remove/list workspace folder | `<leader>wa` / `<leader>wr` / `<leader>wl` |
 
 ### Gitsigns
 | Action | Binding |
 |--------|---------|
 | Next/prev hunk | `]c` / `[c` |
-| Stage hunk | `<leader>hs` |
-| Reset hunk | `<leader>hr` |
-| Stage buffer | `<leader>hS` |
+| Stage / reset hunk | `<leader>hs` / `<leader>hr` |
+| Stage / reset buffer | `<leader>hS` / `<leader>hR` |
 | Undo stage hunk | `<leader>hu` |
-| Reset buffer | `<leader>hR` |
 | Preview hunk | `<leader>hp` |
 | Blame line | `<leader>hb` |
-| Diff this | `<leader>hd` |
-| Diff this ~ | `<leader>hD` |
+| Diff this / against ~ | `<leader>hd` / `<leader>hD` |
 | Select hunk (text obj) | `ih` |
 
 ## Important Notes
 
-- Custom filetype detection for HyprLand config files is in `lua/core/autocmds.lua`
-- Custom Gruvbox syntax highlights are applied via `lua/highlights.lua` (loaded on ColorScheme event, only for gruvbox)
+- Custom filetype detection for Hyprland config files is in `lua/core/autocmds.lua`
+- Custom Gruvbox syntax highlights in `lua/highlights.lua` are re-required on every ColorScheme event when the scheme name matches gruvbox
 - Search/IncSearch/CurSearch and LspReference* highlights live in gruvbox.nvim's `overrides` field in `lua/plugins/themes.lua` (not `highlights.lua`) — gruvbox re-applies these groups internally, so the `overrides` table is the only place that wins. Always include `reverse = false` when overriding, since gruvbox's `inverse = true` defaults to reverse on those groups.
-- Custom lualine theme defined in `lua/lualine_theme.lua` (Gruvbox-based colors)
 - Many default Neovim plugins are disabled in `init.lua` for performance
-- LSP keymaps and document-highlight autocmds (CursorHold → highlight refs to symbol under cursor, CursorMoved → clear) are set on `LspAttach` event in `lua/core/keymaps.lua`
-- Uses nvim 0.11+ `vim.lsp.config` and `vim.lsp.enable` API for LSP server configuration
 - Rainbow delimiters use custom highlight groups (`col1`, `col2`, `col3`) defined in treesitter.lua
+- treesitter.lua re-registers the `set-lang-from-info-string!` directive with a pcall guard to work around TSNode invalidation crashes on nightly
+- Neovide launched with no file args opens the zoxide picker
+- 4-space indentation is the target, but files are a mix of tabs and spaces
 
 ## TODO
 

@@ -45,3 +45,6 @@ require("lazy").setup({
 -- Load keymaps and autocmds after plugins
 require("core.keymaps")
 require("core.autocmds")
+
+require("notes")
+require("search_hud")

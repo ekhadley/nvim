@@ -49,7 +49,7 @@ opt.updatetime = 250
 opt.timeoutlen = 400
 opt.fillchars = { eob = " " }
 opt.list = true
-opt.listchars = { trail = '·' }
+opt.listchars = { trail = '·', tab = '│ ', leadmultispace = '│   ' } -- leadmultispace is rebuilt per buffer from shiftwidth in autocmds.lua
 
 -- Completion
 opt.completeopt = "menu,menuone,noselect"

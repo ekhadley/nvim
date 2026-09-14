@@ -3,7 +3,7 @@ local map = vim.keymap.set
 
 -- General
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
+map("n", "<Esc>", function() vim.cmd.nohlsearch(); require("search_hud").hide() end, { desc = "Clear search highlights" })
 
 -- Navigate display lines (wrapped lines)
 map({ "n", "v" }, "j", "gj", { desc = "Down (display line)" })
@@ -182,3 +182,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+-- Theme picker
+map("n", "<leader>th", function() require("telescope.builtin").colorscheme({ enable_preview = true, ignore_builtins = true }) end, { desc = "Theme picker" })

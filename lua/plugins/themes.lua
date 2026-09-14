@@ -1,67 +1,5 @@
--- Theme plugins and themery configuration
+-- Theme plugins
 return {
-	-- Theme switcher
-	{
-		"zaldih/themery.nvim",
-		lazy = false,
-		priority = 1000,
-		keys = {
-			{ "<leader>th", "<cmd>Themery<CR>", desc = "Theme picker" },
-		},
-		opts = {
-			themes = {
-				{
-					name = "Walrs (Dynamic)",
-					colorscheme = "walrs",
-				},
-				{
-					name = "Gruvbox Dark",
-					colorscheme = "gruvbox",
-					before = [[vim.opt.background = "dark"]],
-				},
-				{
-					name = "Tokyo Night",
-					colorscheme = "tokyonight-night",
-				},
-				{
-					name = "Tokyo Night Storm",
-					colorscheme = "tokyonight-storm",
-				},
-				{
-					name = "Tokyo Night Moon",
-					colorscheme = "tokyonight-moon",
-				},
-				{
-					name = "Catppuccin Mocha",
-					colorscheme = "catppuccin-mocha",
-				},
-				{
-					name = "Catppuccin Macchiato",
-					colorscheme = "catppuccin-macchiato",
-				},
-				{
-					name = "Catppuccin Frappe",
-					colorscheme = "catppuccin-frappe",
-				},
-			},
-			livePreview = true,
-		},
-		config = function(_, opts)
-			require("themery").setup(opts)
-			-- Load custom highlights after theme
-			vim.api.nvim_create_autocmd("ColorScheme", {
-				callback = function()
-					-- Only apply custom highlights for gruvbox
-					local colorscheme = vim.g.colors_name
-					if colorscheme and colorscheme:match("gruvbox") then
-						package.loaded["highlights"] = nil
-pcall(require, "highlights")
-					end
-				end,
-			})
-		end,
-	},
-
 	-- Gruvbox theme
 	{
 		"ellisonleao/gruvbox.nvim",
@@ -100,11 +38,19 @@ pcall(require, "highlights")
 				dim_inactive = false,
 				transparent_mode = false,
 			})
-			-- Set default colorscheme
-			vim.cmd.colorscheme("gruvbox")
-			-- Apply custom highlights
-			package.loaded["highlights"] = nil
-pcall(require, "highlights")
+			-- remember the last theme across restarts, and reapply custom highlights on top of gruvbox
+			local theme_file = vim.fn.stdpath("data") .. "/theme"
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				callback = function()
+					vim.fn.writefile({ vim.g.colors_name }, theme_file)
+					if vim.g.colors_name:match("gruvbox") then
+						package.loaded["highlights"] = nil
+						require("highlights")
+					end
+				end,
+			})
+			local ok, saved = pcall(vim.fn.readfile, theme_file)
+			vim.cmd.colorscheme(ok and saved[1] or "gruvbox")
 		end,
 	},
 

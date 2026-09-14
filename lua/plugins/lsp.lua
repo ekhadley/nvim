@@ -1,28 +1,5 @@
 -- LSP Configuration
 return {
-	-- Mason (LSP installer)
-	{
-		"williamboman/mason.nvim",
-		cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-		opts = {
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
-				},
-			},
-		},
-	},
-
-	-- Mason-lspconfig bridge
-	{
-		"williamboman/mason-lspconfig.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "williamboman/mason.nvim" },
-		opts = { automatic_installation = false },
-	},
-
 	-- LSP config (using vim.lsp.config API for nvim 0.11+)
 	{
 		"neovim/nvim-lspconfig",
