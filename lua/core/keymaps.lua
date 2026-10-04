@@ -33,6 +33,7 @@ map("v", "<C-Left>", "b", { desc = "Jump word backward" })
 map("v", "<C-Right>", "w", { desc = "Jump word forward" })
 map("i", "<C-h>", "<C-o>b", { desc = "Jump word backward" })
 map("i", "<C-l>", "<C-o>w", { desc = "Jump word forward" })
+map("i", "<C-BS>", "<C-w>", { desc = "Delete word backward" })
 map("i", "<C-S-h>", "<Esc>vb", { desc = "Select word backward" })
 map("i", "<C-S-l>", "<Esc>ve", { desc = "Select word forward" })
 map("i", "<C-j>", "<Down>", { desc = "Move down" })
@@ -87,7 +88,7 @@ map({ "n", "v" }, "<C-v>", '"+p', { desc = "Paste from system clipboard" })
 map("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 
 -- Toggle line wrap
-map("n", "<A-S-z>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
+map("n", "<C-\\>", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
 
 -- Toggle markdown checkbox
 local function toggle_checkbox(line)

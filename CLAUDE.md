@@ -83,7 +83,7 @@ nvim --headless -c qa
 | Copy to system clipboard | `<leader>c` or `<C-c>` (visual) |
 | Paste from system clipboard | `<C-v>` or `<C-S-v>` |
 | Select inside word | `W` |
-| Toggle line wrap | `<A-S-z>` |
+| Toggle line wrap | `<C-\>` |
 | Toggle markdown `[ ]`/`[x]` | `<leader>[` (n, x) |
 | Add/remove bullet checkbox | `<leader>]` (n, x) |
 | `:Q` / `:W` / `:WQ` | abbreviations for `qa` / `wa` / `wqa` |
@@ -99,6 +99,7 @@ nvim --headless -c qa
 | Down/up 8 lines | `<S-Down>` / `<S-Up>` |
 | Word backward/forward | `<C-h>` / `<C-l>` (n, v, i) |
 | Select word backward/forward (insert) | `<C-S-h>` / `<C-S-l>` |
+| Delete word backward (insert) | `<C-BS>` |
 | Move down/up (insert) | `<C-j>` / `<C-k>` |
 | Jump backward/forward | `<C-i>` / `<C-o>` (swapped) |
 | Scroll down/up centered | `<C-d>` / `<C-u>` |

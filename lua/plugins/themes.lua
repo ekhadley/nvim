@@ -24,7 +24,7 @@ return {
 				invert_tabline = false,
 				invert_intend_guides = false,
 				inverse = true,
-				contrast = "",
+				contrast = "hard",
 				palette_overrides = {},
 				overrides = {
 					LspReferenceText  = { bg = "#504945", fg = "NONE", bold = false, reverse = false },
