@@ -4,6 +4,8 @@ local map = vim.keymap.set
 -- General
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("n", "<Esc>", function() vim.cmd.nohlsearch(); require("search_hud").hide() end, { desc = "Clear search highlights" })
+map({ "n", "v" }, "/", "/\\v", { desc = "Search forward (very magic)" })
+map({ "n", "v" }, "?", "?\\v", { desc = "Search backward (very magic)" })
 
 -- Navigate display lines (wrapped lines)
 map({ "n", "v" }, "j", "gj", { desc = "Down (display line)" })
@@ -182,6 +184,28 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
+-- File explorer
+map("n", "<C-b>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+
+-- Telescope
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
+map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Buffers" })
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Help tags" })
+map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "Recent files" })
+map("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Resume last search" })
+map("n", "<leader>fd", "<cmd>Telescope zoxide list<CR>", { desc = "Recent directories (zoxide)" })
+map("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "Git commits" })
+map("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "Git status" })
+map("n", "<C-e>", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
+
+-- Hop
+map({ "n", "v" }, "S", "<cmd>HopWord<CR>", { desc = "Hop to word" })
+map({ "n", "v" }, "s", "<cmd>HopWordCurrentLine<CR>", { desc = "Hop word on current line" })
+
+-- Which-key
+map("n", "<leader>?", function() require("which-key").show({ global = false }) end, { desc = "Buffer local keymaps" })
 
 -- Theme picker
 map("n", "<leader>th", function() require("telescope.builtin").colorscheme({ enable_preview = true, ignore_builtins = true }) end, { desc = "Theme picker" })

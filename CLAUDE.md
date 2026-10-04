@@ -4,20 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture Overview
 
-Vanilla Neovim configuration using lazy.nvim as the plugin manager. Targets nvim 0.12+ (uses `vim.lsp.config`/`vim.lsp.enable` and the nvim-treesitter `main` branch).
+Vanilla Neovim configuration using the builtin `vim.pack` plugin manager. Targets nvim 0.12+ (uses `vim.pack`, `vim.lsp.config`/`vim.lsp.enable` and the nvim-treesitter `main` branch).
+
+Startup is one straight line: `init.lua` requires `core.options`, then `plugins` (installs/loads every plugin, then configures them), then `core.keymaps`, `core.autocmds`, `notes`, `search_hud`. Every plugin loads at startup; there is no lazy-loading and no spec DSL. Each `lua/plugins/*.lua` file is a plain script of `require("x").setup({...})` calls.
 
 ### Module Structure
 
 ```
 ~/.config/nvim/
-├── init.lua                    # Entry point, bootstraps lazy.nvim, loads core + notes + search_hud
+├── init.lua                    # Entry point: vim.loader, disables builtin plugins, loads core + plugins + notes + search_hud
+├── nvim-pack-lock.json         # vim.pack lockfile (plugin revisions), written by nvim, not edited by hand
 ├── lua/
 │   ├── core/
 │   │   ├── options.lua         # vim.opt settings
-│   │   ├── keymaps.lua         # all keybindings (LSP keymaps + document-highlight autocmds on LspAttach)
+│   │   ├── keymaps.lua         # all keybindings, including plugin ones (LSP keymaps + document-highlight autocmds on LspAttach)
 │   │   └── autocmds.lua        # autocommands (indent guides, hyprlang filetype, Neovide zoxide launch)
 │   ├── plugins/
-│   │   ├── init.lua            # imports all plugin modules
+│   │   ├── init.lua            # the vim.pack.add() plugin list, PackChanged hook, then requires the files below
 │   │   ├── lsp.lua             # nvim-lspconfig: servers, diagnostics
 │   │   ├── cmp.lua             # blink.cmp + LuaSnip
 │   │   ├── treesitter.lua      # treesitter (main branch) + incremental selection + rainbow-delimiters
@@ -27,7 +30,7 @@ Vanilla Neovim configuration using lazy.nvim as the plugin manager. Targets nvim
 │   ├── highlights.lua          # custom Gruvbox-based syntax highlighting overrides
 │   ├── lualine_theme.lua       # custom Gruvbox-based lualine statusline theme
 │   ├── notes.lua               # :NoteSidecar — right-hand todo column over ~/Notes/{todo,global_todo}.md
-│   └── search_hud.lua          # floating top-right HUD: live pattern, match count, regex errors for / ? :s
+│   └── search_hud.lua          # float by the cursor for / ? :s: token-colored pattern, match count, regex errors, plain-words regex legend; n/N count at end of line
 ├── colors/
 │   ├── walrs.lua               # dynamic colorscheme loading ~/.cache/wal/colors-nvim.lua
 │   ├── gruvbox_dark.lua        # gruvbox dark color definitions
@@ -57,6 +60,10 @@ There is no mason. Servers are installed system-wide (pacman, cargo, npm) and mu
 - basedpyright (typeCheckingMode = basic)
 - lua_ls (on_init avoids indexing $HOME for loose lua files)
 - yuckls (manual `vim.lsp.start` per `*.yuck` buffer)
+
+### Plugin Management
+
+Plugins live in `~/.local/share/nvim/site/pack/core/opt/`. To add one: add its URL to `vim.pack.add()` in `lua/plugins/init.lua`, add its `setup()` call to the matching file, restart. To update: `:lua vim.pack.update()`, review the buffer, `:write` to apply or `:quit` to discard. To remove: delete it from the list, restart, then `:lua vim.pack.del({ "name" })`. A `PackChanged` autocmd runs `:TSUpdate` when nvim-treesitter updates. blink.cmp follows release tags (it downloads a prebuilt fuzzy-matcher binary for the tag); LuaSnip follows v2 tags.
 
 ## Testing and Development
 
@@ -179,7 +186,9 @@ Menu and ghost text are disabled for markdown and tex; tex uses only lsp + path 
 - Custom filetype detection for Hyprland config files is in `lua/core/autocmds.lua`
 - Custom Gruvbox syntax highlights in `lua/highlights.lua` are re-required on every ColorScheme event when the scheme name matches gruvbox
 - Search/IncSearch/CurSearch and LspReference* highlights live in gruvbox.nvim's `overrides` field in `lua/plugins/themes.lua` (not `highlights.lua`) — gruvbox re-applies these groups internally, so the `overrides` table is the only place that wins. Always include `reverse = false` when overriding, since gruvbox's `inverse = true` defaults to reverse on those groups.
-- Many default Neovim plugins are disabled in `init.lua` for performance
+- Builtin runtime plugins (gzip, matchit, netrw, tar, zip, tutor, rplugin) are disabled in `init.lua` via their `vim.g.loaded_*` guards
+- `lua/plugins/cmp.lua` and `lua/plugins/lsp.lua` are skipped when `vim.g.vscode` is set (vscode-neovim)
+- vimtex is configured through `vim.g.vimtex_*` globals in editor.lua; they must be set before its `plugin/` files load, which happens after `init.lua` finishes
 - Rainbow delimiters use custom highlight groups (`col1`, `col2`, `col3`) defined in treesitter.lua
 - treesitter.lua re-registers the `set-lang-from-info-string!` directive with a pcall guard to work around TSNode invalidation crashes on nightly
 - Neovide launched with no file args opens the zoxide picker
